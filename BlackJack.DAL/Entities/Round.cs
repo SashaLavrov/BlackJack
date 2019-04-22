@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BlackJack.DAL.Entities
 {
-    class Round
+    public class Round
     {
         [Key]
         public int RoundId { get; set; }

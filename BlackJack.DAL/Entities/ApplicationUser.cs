@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BlackJack.DAL.Entities
 {
-    class ApplicationUser : IdentityUser
+    public class ApplicationUser : IdentityUser
     {
         public string Nickname { get; set; }
 

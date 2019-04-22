@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BlackJack.DAL.Entities
 {
-    class Combination
+    public class Combination
     {
         [Key]
         public int CombinationId { get; set; }

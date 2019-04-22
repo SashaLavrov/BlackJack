@@ -19,7 +19,6 @@ namespace BlackJack.DAL.Repositories
         public void Create(Round item)
         {
             _db.Rounds.Add(item);
-            _db.SaveChanges();
         }
 
         public void Delete(int id)
@@ -28,7 +27,6 @@ namespace BlackJack.DAL.Repositories
             if (round != null)
             {
                 _db.Rounds.Remove(round);
-                _db.SaveChanges();
             }
         }
         public Round Get(int id) => _db.Rounds.Find(id);
@@ -39,8 +37,9 @@ namespace BlackJack.DAL.Repositories
         {
             var oldRound = _db.Rounds.Find(item.RoundId);
             if (oldRound == null)
+            {
                 _db.Entry(oldRound).CurrentValues.SetValues(item);
-            _db.SaveChanges();
+            }
         }
     }
 }

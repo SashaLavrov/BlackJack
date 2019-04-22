@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BlackJack.DAL.Interfaces
 {
-    interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork
     {
         IRepository<Game> Games { get; }
         IRepository<Round> Rounds { get; }

@@ -20,7 +20,6 @@ namespace BlackJack.DAL.Repositories
         public void Create(Card item)
         {
             _db.Cards.Add(item);
-            _db.SaveChanges();
         }
 
         public void Delete(int id)
@@ -29,7 +28,6 @@ namespace BlackJack.DAL.Repositories
             if (card != null)
             {
                 _db.Cards.Remove(card);
-                _db.SaveChanges();
             }
         }
         public Card Get(int id) => _db.Cards.Find(id);
@@ -40,8 +38,9 @@ namespace BlackJack.DAL.Repositories
         {
             var oldCard = _db.Cards.Find(item.CardId);
             if (oldCard == null)
+            {
                 _db.Entry(oldCard).CurrentValues.SetValues(item);
-            _db.SaveChanges();
+            }
         }
     }
 }

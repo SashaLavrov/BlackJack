@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BlackJack.DAL.Entities
 {
-    class ComboCard
+    public class ComboCard
     {
         [Key]
         public int ComboCardId { get; set; }
