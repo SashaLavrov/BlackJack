@@ -54,8 +54,9 @@ namespace BlackJack.DAL.Migrations
                 {
                     CardId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Valye = table.Column<int>(nullable: false),
-                    Type = table.Column<string>(nullable: true)
+                    Value = table.Column<int>(nullable: false),
+                    Type = table.Column<string>(nullable: true),
+                    Suit = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -251,6 +252,65 @@ namespace BlackJack.DAL.Migrations
                         principalTable: "Combinations",
                         principalColumn: "CombinationId",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Cards",
+                columns: new[] { "CardId", "Suit", "Type", "Value" },
+                values: new object[,]
+                {
+                    { 2, "Hearts", "ace", 11 },
+                    { 30, "Clubs", "two", 2 },
+                    { 31, "Clubs", "three", 3 },
+                    { 32, "Clubs", "four", 4 },
+                    { 33, "Clubs", "five", 5 },
+                    { 34, "Clubs", "six", 6 },
+                    { 35, "Clubs", "seven", 7 },
+                    { 36, "Clubs", "eight", 8 },
+                    { 37, "Clubs", "nine", 9 },
+                    { 38, "Clubs", "ten", 10 },
+                    { 39, "Clubs", "jack", 10 },
+                    { 29, "Diamonds ", "king", 10 },
+                    { 40, "Clubs", "queen", 10 },
+                    { 42, "Spades", "two", 2 },
+                    { 43, "Spades", "three", 3 },
+                    { 44, "Spades", "four", 4 },
+                    { 45, "Spades", "five", 5 },
+                    { 46, "Spades", "six", 6 },
+                    { 47, "Spades", "seven", 7 },
+                    { 48, "Spades", "eight", 8 },
+                    { 49, "Spades", "nine", 9 },
+                    { 50, "Spades", "ten", 10 },
+                    { 51, "Spades", "jack", 10 },
+                    { 41, "Clubs", "king", 10 },
+                    { 28, "Diamonds ", "queen", 10 },
+                    { 27, "Diamonds ", "jack", 10 },
+                    { 26, "Diamonds ", "ten", 10 },
+                    { 3, "Diamonds", "ace", 11 },
+                    { 4, "Clubs", "ace", 11 },
+                    { 5, "Spades", "ace", 11 },
+                    { 6, "Hearts", "two", 2 },
+                    { 7, "Hearts", "three", 3 },
+                    { 8, "Hearts", "four", 4 },
+                    { 9, "Hearts", "five", 5 },
+                    { 10, "Hearts", "six", 6 },
+                    { 11, "Hearts", "seven", 7 },
+                    { 12, "Hearts", "eight", 8 },
+                    { 13, "Hearts", "nine", 9 },
+                    { 14, "Hearts", "ten", 10 },
+                    { 15, "Hearts", "jack", 10 },
+                    { 16, "Hearts", "queen", 10 },
+                    { 17, "Hearts", "king", 10 },
+                    { 18, "Diamonds ", "two", 2 },
+                    { 19, "Diamonds ", "three", 3 },
+                    { 20, "Diamonds ", "four", 4 },
+                    { 21, "Diamonds ", "five", 5 },
+                    { 22, "Diamonds ", "six", 6 },
+                    { 23, "Diamonds ", "seven", 7 },
+                    { 24, "Diamonds ", "eight", 8 },
+                    { 25, "Diamonds ", "nine", 9 },
+                    { 52, "Spades", "queen", 10 },
+                    { 53, "Spades", "king", 10 }
                 });
 
             migrationBuilder.CreateIndex(

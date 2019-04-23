@@ -14,6 +14,8 @@ namespace BlackJack.DAL.Entities
 
         public string Type { get; set; }
 
+        public string Suit { get; set; }
+
         public IEnumerable<ComboCard> ComboCards { get; set; }
     }
 }

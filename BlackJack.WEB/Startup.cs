@@ -47,8 +47,17 @@ namespace BlackJack.WEB
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<ICardService, CardService>();
-            services.AddScoped<IRepository<Card>, CardRepository>();
+            services.AddScoped<IGameService, GameService>();
+            services.AddScoped<ICombinationService, CombinationService>();
+            services.AddScoped<IRoundService, RoundService>();
+            services.AddScoped<IComboCardService, ComboCardService>();
 
+
+            services.AddScoped<IRepository<Card>, CardRepository>();
+            services.AddScoped<IRepository<Game>, GameRepository>();
+            services.AddScoped<IRepository<Round>, RoundRepository>();
+            services.AddScoped<IRepository<Combination>, CombinationRepository>();
+            services.AddScoped<IRepository<ComboCard>, ComboCardRepository>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -70,6 +79,7 @@ namespace BlackJack.WEB
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

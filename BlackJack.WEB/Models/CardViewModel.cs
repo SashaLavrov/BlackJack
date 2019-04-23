@@ -12,5 +12,7 @@ namespace BlackJack.WEB.Models
         public int Value { get; set; }
 
         public string Type { get; set; }
+
+        public string Suit { get; set; }
     }
 }

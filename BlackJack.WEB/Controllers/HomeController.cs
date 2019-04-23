@@ -6,32 +6,39 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BlackJack.WEB.Models;
 using BlackJack.BLL.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using BlackJack.DAL.Entities;
+using AutoMapper;
 
 namespace BlackJack.WEB.Controllers
 {
     public class HomeController : Controller
     {
-        private ICardService _cardService;
-
-        public HomeController(ICardService cardService)
+        private UserManager<ApplicationUser> _userManager;
+        public HomeController(UserManager<ApplicationUser> userManager)
         {
-            _cardService = cardService;
+            _userManager = userManager;
         }
         public IActionResult Index()
         {
-            var res = _cardService.Get(1);
-            CardViewModel model = new CardViewModel() {
-                CardId = res.CardId,
-                Type = res.Type,
-                Value = res.Value
-            };
-           
-            return View(model);
+            //var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUser, UserViewModel>()).CreateMapper();
+            //var res = mapper.Map<IEnumerable<ApplicationUser>, List<UserViewModel>>(_userManager.Users.ToList());
+            ViewBag.UserList = _userManager.Users.ToList();
+            return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult GoPlay(string userName)
         {
-            return View();
+            var users = _userManager.Users.ToList();
+            if (users.Where(x => x.UserName == userName).FirstOrDefault() == null)
+            {
+                return RedirectToAction("Register", "Account");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

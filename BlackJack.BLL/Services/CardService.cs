@@ -24,7 +24,8 @@ namespace BlackJack.BLL.Services
                 Card temp = new Card
                 {
                     Type = card.Type,
-                    Value = card.Value
+                    Value = card.Value,
+                    Suit = card.Suit
                 };
                 _db.Create(temp);
                 _db.Save();
@@ -33,11 +34,16 @@ namespace BlackJack.BLL.Services
 
         public bool EditCard(CardDTO card)
         {
+            if (card == null)
+            {
+                return false;
+            }
             Card temp = new Card
             {
                 CardId = card.CardId,
                 Type = card.Type,
-                Value = card.Value
+                Value = card.Value,
+                Suit = card.Suit
             };
             _db.Update(temp);
             _db.Save();
@@ -51,7 +57,8 @@ namespace BlackJack.BLL.Services
             {
                 CardId = res.CardId,
                 Type = res.Type,
-                Value = res.Value
+                Value = res.Value,
+                Suit = res.Suit
             };
         }
 

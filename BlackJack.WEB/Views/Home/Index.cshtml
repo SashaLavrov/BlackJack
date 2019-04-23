@@ -1,11 +1,31 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-@model BlackJack.WEB.Models.CardViewModel
 
-    <h4>@Model.Value;</h4>
+@if (User.Identity.IsAuthenticated)
+{
+    <p>@User.Identity.Name</p>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    <form method="post" asp-controller="Account" asp-action="LogOff">
+        <input type="submit" value="Выход" />
+    </form>
+}
+else
+{
+<form method="post" asp-controller="Home" asp-action="GoPlay">
+    <input name="userName" type="text" list=@ViewBag.UserList autocomplete="on" id="name" />
+        <datalist id=@ViewBag.UserList>
+            @foreach (var item in ViewBag.UserList)
+            {
+                <option name=@item.UserName>@item.UserName</option>
+            }
+        </datalist>
+    
+    <div>
+        <input type="submit" value="Далее" />
+    </div>
+</form>
+
+        @*<a asp-controller="Account" asp-action="Login">Вход</a>
+        <a asp-controller="Account" asp-action="Register">Регистрация</a>*@
+}
