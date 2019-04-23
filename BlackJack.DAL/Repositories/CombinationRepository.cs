@@ -8,7 +8,7 @@ using System.Text;
 
 namespace BlackJack.DAL.Repositories
 {
-    class CombinationRepository : IRepository<Combination>
+    public class CombinationRepository : IRepository<Combination>
     {
         private ApplicationContext _db;
 
@@ -33,6 +33,11 @@ namespace BlackJack.DAL.Repositories
         public Combination Get(int id) => _db.Combinations.Find(id);
 
         public IEnumerable<Combination> GetAll() => _db.Combinations.ToList();
+
+        public void Save()
+        {
+            _db.SaveChanges();
+        }
 
         public void Update(Combination item)
         {

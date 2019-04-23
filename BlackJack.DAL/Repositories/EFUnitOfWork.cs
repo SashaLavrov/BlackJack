@@ -7,10 +7,11 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace BlackJack.DAL.Repositories
 {
-    class EFUnitOfWork : IUnitOfWork
+    public class EFUnitOfWork : IUnitOfWork
     {
         private ApplicationContext _db;
         private GameRepository _gameRepository;
@@ -18,9 +19,6 @@ namespace BlackJack.DAL.Repositories
         private CombinationRepository _combinationRepository;
         private ComboCardRepository _comboCardRepository;
         private CardRepository _cardRepository;
-
-        private UserManager<ApplicationUser> _userManager;
-        //private RoleManager<ApplicationUser> _roleManager;
 
         public EFUnitOfWork(DbContextOptions<ApplicationContext> options)
         {
@@ -30,8 +28,6 @@ namespace BlackJack.DAL.Repositories
             _combinationRepository = new CombinationRepository(_db);
             _comboCardRepository = new ComboCardRepository(_db);
             _cardRepository = new CardRepository(_db);
-
-            //_userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_db));
         }
 
         public IRepository<Game> Games

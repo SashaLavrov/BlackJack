@@ -5,14 +5,28 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BlackJack.WEB.Models;
+using BlackJack.BLL.Interfaces;
 
 namespace BlackJack.WEB.Controllers
 {
     public class HomeController : Controller
     {
+        private ICardService _cardService;
+
+        public HomeController(ICardService cardService)
+        {
+            _cardService = cardService;
+        }
         public IActionResult Index()
         {
-            return View();
+            var res = _cardService.Get(1);
+            CardViewModel model = new CardViewModel() {
+                CardId = res.CardId,
+                Type = res.Type,
+                Value = res.Value
+            };
+           
+            return View(model);
         }
 
         public IActionResult Privacy()

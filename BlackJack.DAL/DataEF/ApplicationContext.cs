@@ -7,7 +7,7 @@ using System.Text;
 
 namespace BlackJack.DAL.DataEF
 {
-    class ApplicationContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Card> Cards { get; set; }
         public DbSet<Combination> Combinations { get; set; }

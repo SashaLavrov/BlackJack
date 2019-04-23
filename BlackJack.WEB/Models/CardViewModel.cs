@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace BlackJack.BLL.DTO
+namespace BlackJack.WEB.Models
 {
-    public class CardDTO
+    public class CardViewModel
     {
         public int CardId { get; set; }
 

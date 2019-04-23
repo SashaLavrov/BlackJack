@@ -8,7 +8,7 @@ using System.Text;
 
 namespace BlackJack.DAL.Repositories
 {
-    class GameRepository : IRepository<Game>
+    public class GameRepository : IRepository<Game>
     {
         private ApplicationContext _db;
 
@@ -32,6 +32,11 @@ namespace BlackJack.DAL.Repositories
         public Game Get(int id) => _db.Games.Find(id);
 
         public IEnumerable<Game> GetAll() => _db.Games.ToList();
+
+        public void Save()
+        {
+            _db.SaveChanges();
+        }
 
         public void Update(Game item)
         {

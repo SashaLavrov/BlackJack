@@ -5,8 +5,16 @@ using System.Text;
 
 namespace BlackJack.BLL.Interfaces
 {
-    interface ICardService
+    public interface ICardService
     {
         CardDTO Get(int id);
+
+        void AddCard(CardDTO card);
+
+        bool EditCard(CardDTO card);
+
+        bool RemoveCard(int cardId);
+
+        IEnumerable<CardDTO> GetCards();
     }
 }

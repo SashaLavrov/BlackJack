@@ -10,11 +10,10 @@ namespace BlackJack.DAL.Entities
         [Key]
         public int CardId { get; set; }
 
-        public int Valye { get; set; }
+        public int Value { get; set; }
 
         public string Type { get; set; }
 
         public IEnumerable<ComboCard> ComboCards { get; set; }
-        
     }
 }
