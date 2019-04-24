@@ -13,10 +13,10 @@ namespace BlackJack.BLL.Services
     {
         private  IRepository<Game> _db;
 
-        public GameService(IRepository<Game> db)
+        public GameService(IRepository<Game> db, IRepository<Round> dbRound)
         {
             _db = db;
-        }
+    }
         public void AddGame(GameDTO game)
         {
             if (game != null)
@@ -26,7 +26,6 @@ namespace BlackJack.BLL.Services
                     GameDate = DateTime.Now,
                 };
                 _db.Create(temp);
-                _db.Save();
             }
         }
 
@@ -42,7 +41,6 @@ namespace BlackJack.BLL.Services
                 GameDate = game.GameDate
             };
             _db.Update(temp);
-            _db.Save();
             return true;
         }
 
@@ -69,7 +67,6 @@ namespace BlackJack.BLL.Services
                 return false;
             }
             _db.Delete(gameId);
-            _db.Save();
             return true;
         }
     }

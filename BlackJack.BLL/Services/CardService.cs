@@ -28,7 +28,6 @@ namespace BlackJack.BLL.Services
                     Suit = card.Suit
                 };
                 _db.Create(temp);
-                _db.Save();
             }
         }
 
@@ -46,7 +45,6 @@ namespace BlackJack.BLL.Services
                 Suit = card.Suit
             };
             _db.Update(temp);
-            _db.Save();
             return true;
         }
 
@@ -75,7 +73,6 @@ namespace BlackJack.BLL.Services
                 return false;
             }
             _db.Delete(cardId);
-            _db.Save();
             return true;
         }
     }

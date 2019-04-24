@@ -27,7 +27,6 @@ namespace BlackJack.BLL.Services
                     UserId = combination.UserId
                 };
                 _db.Create(temp);
-                _db.Save();
             }
         }
 
@@ -44,7 +43,6 @@ namespace BlackJack.BLL.Services
                 UserId = combination.UserId
             };
             _db.Update(temp);
-            _db.Save();
             return true;
         }
 
@@ -72,7 +70,6 @@ namespace BlackJack.BLL.Services
                 return false;
             }
             _db.Delete(combinationId);
-            _db.Save();
             return true;
         }
     }

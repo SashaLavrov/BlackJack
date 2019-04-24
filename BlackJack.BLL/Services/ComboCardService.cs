@@ -27,7 +27,6 @@ namespace BlackJack.BLL.Services
                     CombinationId = comboCard.CombinationId
                 };
                 _db.Create(temp);
-                _db.Save();
             }
         }
 
@@ -50,7 +49,6 @@ namespace BlackJack.BLL.Services
                 ComboCardId = comboCard.ComboCardId
             };
             _db.Update(temp);
-            _db.Save();
             return true;
         }
 
@@ -72,7 +70,6 @@ namespace BlackJack.BLL.Services
                 return false;
             }
             _db.Delete(comboCardId);
-            _db.Save();
             return true;
         }
     }

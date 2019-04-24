@@ -17,9 +17,11 @@ namespace BlackJack.DAL.Repositories
             _db = context;
         }
 
-        public void Create(ComboCard item)
+        public int Create(ComboCard item)
         {
             _db.ComboCards.Add(item);
+            _db.SaveChanges();
+            return item.ComboCardId;
         }
 
         public void Delete(int id)
@@ -28,16 +30,12 @@ namespace BlackJack.DAL.Repositories
             if (comboCard != null)
             {
                 _db.ComboCards.Remove(comboCard);
+                _db.SaveChanges();
             }
         }
         public ComboCard Get(int id) => _db.ComboCards.Find(id);
 
         public IEnumerable<ComboCard> GetAll() => _db.ComboCards.ToList();
-
-        public void Save()
-        {
-            _db.SaveChanges();
-        }
 
         public void Update(ComboCard item)
         {
@@ -45,6 +43,7 @@ namespace BlackJack.DAL.Repositories
             if (oldComboCard == null)
             {
                 _db.Entry(oldComboCard).CurrentValues.SetValues(item);
+                _db.SaveChanges();
             }     
         }
     }

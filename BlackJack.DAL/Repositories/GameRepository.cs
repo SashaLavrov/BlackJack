@@ -16,9 +16,11 @@ namespace BlackJack.DAL.Repositories
         {
             _db = context;
         }
-        public void Create(Game item)
+        public int Create(Game item)
         {
             _db.Games.Add(item);
+            _db.SaveChanges();
+            return item.GameId;
         }
 
         public void Delete(int id)
@@ -27,16 +29,12 @@ namespace BlackJack.DAL.Repositories
             if (game != null)
             {
                 _db.Games.Remove(game);
+                _db.SaveChanges();
             }
         }
         public Game Get(int id) => _db.Games.Find(id);
 
         public IEnumerable<Game> GetAll() => _db.Games.ToList();
-
-        public void Save()
-        {
-            _db.SaveChanges();
-        }
 
         public void Update(Game item)
         {
@@ -44,6 +42,7 @@ namespace BlackJack.DAL.Repositories
             if (oldGame == null)
             {
                 _db.Entry(oldGame).CurrentValues.SetValues(item);
+                _db.SaveChanges();
             }
         }
     }

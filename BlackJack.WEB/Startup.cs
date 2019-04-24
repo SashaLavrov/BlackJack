@@ -51,6 +51,7 @@ namespace BlackJack.WEB
             services.AddScoped<ICombinationService, CombinationService>();
             services.AddScoped<IRoundService, RoundService>();
             services.AddScoped<IComboCardService, ComboCardService>();
+            services.AddScoped<IStartGameService, StartGameService>();
 
 
             services.AddScoped<IRepository<Card>, CardRepository>();

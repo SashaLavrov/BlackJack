@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewData["Title"] = "Game";
+}
+
+<h1>Game</h1>
+<div class="container">
+    <div class="grid">
+        <div class="box">Column</div>
+        <div class="box">Column</div>
+        <div class="box">Column</div>
+        <div class="box">Column</div>
+        <div class="box">Column</div>
+        <div class="box">Column</div>
+        <div class="break"></div>
+    </div>
+
+    <style>
+        .grid {
+            border: .125rem solid;
+            text-align: justify;
+            font-size: 0;
+            padding: 4% 4% 4% 4%
+        }
+
+        .box {
+            font-size: 1rem;
+            display: inline-block;
+            background: #eee;
+            border: .125em solid;
+            width: 30%;
+            padding: 2%
+        }
+
+            /* All but the last 3 boxes */
+            .box:nth-last-child(n+5) {
+                margin-bottom: 4%
+            }
+
+        .break {
+            display: inline-block;
+            width: 30%;
+            height: 0
+        }
+    </style>
+</div>

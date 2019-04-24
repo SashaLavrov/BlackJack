@@ -27,7 +27,6 @@ namespace BlackJack.BLL.Services
                     RoundId = round.RoundId
                 };
                 _db.Create(temp);
-                _db.Save();
             }
         }
 
@@ -43,7 +42,6 @@ namespace BlackJack.BLL.Services
                 RoundId = round.RoundId
             };
             _db.Update(temp);
-            _db.Save();
             return true;
         }
 
@@ -70,7 +68,6 @@ namespace BlackJack.BLL.Services
                 return false;
             }
             _db.Delete(roundId);
-            _db.Save();
             return true;
         }
     }
