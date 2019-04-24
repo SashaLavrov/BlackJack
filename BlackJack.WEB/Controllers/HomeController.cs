@@ -5,25 +5,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BlackJack.WEB.Models;
-using BlackJack.BLL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using BlackJack.DAL.Entities;
 using AutoMapper;
 
 namespace BlackJack.WEB.Controllers
 {
     public class HomeController : Controller
     {
-        private UserManager<ApplicationUser> _userManager;
-        public HomeController(UserManager<ApplicationUser> userManager)
+        private UserManager<User> _userManager;
+        public HomeController(UserManager<User> userManager)
         {
             _userManager = userManager;
         }
         public IActionResult Index()
         {
-            //var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUser, UserViewModel>()).CreateMapper();
-            //var res = mapper.Map<IEnumerable<ApplicationUser>, List<UserViewModel>>(_userManager.Users.ToList());
             ViewBag.UserList = _userManager.Users.ToList();
             return View();
         }

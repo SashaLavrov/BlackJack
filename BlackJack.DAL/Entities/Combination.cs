@@ -12,7 +12,7 @@ namespace BlackJack.DAL.Entities
 
         public int RoundId { get; set; }
         public Round Round { get; set; }
-        public ApplicationUser User { get; set; }
-        public string UserId { get; set; }
+        public User User { get; set; }
+        public int UserId { get; set; }
     }
 }

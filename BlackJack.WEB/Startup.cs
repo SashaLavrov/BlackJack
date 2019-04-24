@@ -4,10 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using BlackJack.BLL.Interfaces;
 using BlackJack.BLL.Services;
-using BlackJack.DAL.DataEF;
-using BlackJack.DAL.Entities;
-using BlackJack.DAL.Interfaces;
-using BlackJack.DAL.Repositories;
+using BlackJack.WEB.Data;
+using BlackJack.WEB.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -39,28 +37,15 @@ namespace BlackJack.WEB
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationContext>()
-                .AddDefaultTokenProviders();
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddDbContext<ApplicationContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            services.AddScoped<ICardService, CardService>();
-            services.AddScoped<IGameService, GameService>();
-            services.AddScoped<ICombinationService, CombinationService>();
-            services.AddScoped<IRoundService, RoundService>();
-            services.AddScoped<IComboCardService, ComboCardService>();
-            services.AddScoped<IStartGameService, StartGameService>();
-
-
-            services.AddScoped<IRepository<Card>, CardRepository>();
-            services.AddScoped<IRepository<Game>, GameRepository>();
-            services.AddScoped<IRepository<Round>, RoundRepository>();
-            services.AddScoped<IRepository<Combination>, CombinationRepository>();
-            services.AddScoped<IRepository<ComboCard>, ComboCardRepository>();
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")
+                .Replace("|ProjectFolder|", Environment.CurrentDirectory + "\\Data")));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            //services.AddServicesFromBL(Configuration.GetConnectionString("DefaultConnection"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

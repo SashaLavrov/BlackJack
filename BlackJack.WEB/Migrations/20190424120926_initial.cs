@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace BlackJack.DAL.Migrations
+namespace BlackJack.WEB.Migrations
 {
     public partial class initial : Migration
     {
@@ -46,34 +46,6 @@ namespace BlackJack.DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Cards",
-                columns: table => new
-                {
-                    CardId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Value = table.Column<int>(nullable: false),
-                    Type = table.Column<string>(nullable: true),
-                    Suit = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cards", x => x.CardId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Games",
-                columns: table => new
-                {
-                    GameId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    GameDate = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Games", x => x.GameId);
                 });
 
             migrationBuilder.CreateTable(
@@ -182,137 +154,6 @@ namespace BlackJack.DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Rounds",
-                columns: table => new
-                {
-                    RoundId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    GameId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Rounds", x => x.RoundId);
-                    table.ForeignKey(
-                        name: "FK_Rounds_Games_GameId",
-                        column: x => x.GameId,
-                        principalTable: "Games",
-                        principalColumn: "GameId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Combinations",
-                columns: table => new
-                {
-                    CombinationId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    RoundId = table.Column<int>(nullable: false),
-                    UserId = table.Column<int>(nullable: false),
-                    ApplicationUserId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Combinations", x => x.CombinationId);
-                    table.ForeignKey(
-                        name: "FK_Combinations_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Combinations_Rounds_RoundId",
-                        column: x => x.RoundId,
-                        principalTable: "Rounds",
-                        principalColumn: "RoundId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ComboCards",
-                columns: table => new
-                {
-                    ComboCardId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CombinationId = table.Column<int>(nullable: false),
-                    CardId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ComboCards", x => x.ComboCardId);
-                    table.ForeignKey(
-                        name: "FK_ComboCards_Cards_CardId",
-                        column: x => x.CardId,
-                        principalTable: "Cards",
-                        principalColumn: "CardId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ComboCards_Combinations_CombinationId",
-                        column: x => x.CombinationId,
-                        principalTable: "Combinations",
-                        principalColumn: "CombinationId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.InsertData(
-                table: "Cards",
-                columns: new[] { "CardId", "Suit", "Type", "Value" },
-                values: new object[,]
-                {
-                    { 2, "Hearts", "ace", 11 },
-                    { 30, "Clubs", "two", 2 },
-                    { 31, "Clubs", "three", 3 },
-                    { 32, "Clubs", "four", 4 },
-                    { 33, "Clubs", "five", 5 },
-                    { 34, "Clubs", "six", 6 },
-                    { 35, "Clubs", "seven", 7 },
-                    { 36, "Clubs", "eight", 8 },
-                    { 37, "Clubs", "nine", 9 },
-                    { 38, "Clubs", "ten", 10 },
-                    { 39, "Clubs", "jack", 10 },
-                    { 29, "Diamonds ", "king", 10 },
-                    { 40, "Clubs", "queen", 10 },
-                    { 42, "Spades", "two", 2 },
-                    { 43, "Spades", "three", 3 },
-                    { 44, "Spades", "four", 4 },
-                    { 45, "Spades", "five", 5 },
-                    { 46, "Spades", "six", 6 },
-                    { 47, "Spades", "seven", 7 },
-                    { 48, "Spades", "eight", 8 },
-                    { 49, "Spades", "nine", 9 },
-                    { 50, "Spades", "ten", 10 },
-                    { 51, "Spades", "jack", 10 },
-                    { 41, "Clubs", "king", 10 },
-                    { 28, "Diamonds ", "queen", 10 },
-                    { 27, "Diamonds ", "jack", 10 },
-                    { 26, "Diamonds ", "ten", 10 },
-                    { 3, "Diamonds", "ace", 11 },
-                    { 4, "Clubs", "ace", 11 },
-                    { 5, "Spades", "ace", 11 },
-                    { 6, "Hearts", "two", 2 },
-                    { 7, "Hearts", "three", 3 },
-                    { 8, "Hearts", "four", 4 },
-                    { 9, "Hearts", "five", 5 },
-                    { 10, "Hearts", "six", 6 },
-                    { 11, "Hearts", "seven", 7 },
-                    { 12, "Hearts", "eight", 8 },
-                    { 13, "Hearts", "nine", 9 },
-                    { 14, "Hearts", "ten", 10 },
-                    { 15, "Hearts", "jack", 10 },
-                    { 16, "Hearts", "queen", 10 },
-                    { 17, "Hearts", "king", 10 },
-                    { 18, "Diamonds ", "two", 2 },
-                    { 19, "Diamonds ", "three", 3 },
-                    { 20, "Diamonds ", "four", 4 },
-                    { 21, "Diamonds ", "five", 5 },
-                    { 22, "Diamonds ", "six", 6 },
-                    { 23, "Diamonds ", "seven", 7 },
-                    { 24, "Diamonds ", "eight", 8 },
-                    { 25, "Diamonds ", "nine", 9 },
-                    { 52, "Spades", "queen", 10 },
-                    { 53, "Spades", "king", 10 }
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -351,31 +192,6 @@ namespace BlackJack.DAL.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Combinations_ApplicationUserId",
-                table: "Combinations",
-                column: "ApplicationUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Combinations_RoundId",
-                table: "Combinations",
-                column: "RoundId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ComboCards_CardId",
-                table: "ComboCards",
-                column: "CardId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ComboCards_CombinationId",
-                table: "ComboCards",
-                column: "CombinationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Rounds_GameId",
-                table: "Rounds",
-                column: "GameId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -396,25 +212,10 @@ namespace BlackJack.DAL.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "ComboCards");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Cards");
-
-            migrationBuilder.DropTable(
-                name: "Combinations");
-
-            migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Rounds");
-
-            migrationBuilder.DropTable(
-                name: "Games");
         }
     }
 }
