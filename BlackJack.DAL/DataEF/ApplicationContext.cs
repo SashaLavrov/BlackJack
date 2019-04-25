@@ -83,6 +83,19 @@ namespace BlackJack.DAL.DataEF
                 new Card {CardId=52, Suit="Spades", Value=10, Type="queen"},
                 new Card {CardId=53, Suit="Spades", Value=10, Type="king"},
             });
+
+            builder.Entity<User>().HasData(
+           new User[]
+           {
+               new User { UserId = 1, IsBot = false, Nickname="Dealer"},
+               new User { UserId = 2, IsBot = true, Nickname="Bot_1"},
+               new User { UserId = 3, IsBot = true, Nickname="Bot_2"},
+               new User { UserId = 4, IsBot = true, Nickname="Bot_3"},
+               new User { UserId = 5, IsBot = true, Nickname="Bot_4"},
+               new User { UserId = 6, IsBot = true, Nickname="Bot_5"},
+               new User { UserId = 7, IsBot = true, Nickname="Bot_6"},
+
+           });
             base.OnModelCreating(builder);
         }
     }

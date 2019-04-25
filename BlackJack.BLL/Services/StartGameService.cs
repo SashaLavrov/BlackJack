@@ -1,5 +1,4 @@
 ﻿using BlackJack.BLL.Interfaces;
-using BlackJack.BLL.Models;
 using BlackJack.DAL.Entities;
 using BlackJack.DAL.Interfaces;
 using System;
@@ -33,24 +32,44 @@ namespace BlackJack.BLL.Services
             _dbUser = dbUser;
         }
 
-        public /*CurrentGameState*/void StartNewGame(int botsCount, int userId)
+        public int StartNewGame(int botsCount, string userName)
         {
             int gameId = InitialGame();
+            int roundId = InitialRound(gameId);
 
-            AddBotToGame(gameId, botsCount);
+            AddBotsToGame(botsCount, roundId);
+            AddDealer(roundId);
+            InitialPlayerState(InitialPlayer(userName), roundId);
 
-            int combinationId = InitialCombination(InitialRound(gameId), userId);
-            GiveCard(combinationId, GetRandomCard().CardId);
-            GiveCard(combinationId, GetRandomCard().CardId);
-
-            
+            return gameId;
         }
 
-        private void AddBotToGame(int gameId, int botsCount)
+        //*******************************************************************//
+        private void AddDealer(int roundId)
         {
-            int maxBotCount = 8;
+            int dealerId = 1;
+            InitialPlayerState(dealerId, roundId);
+        }
+        private void InitialPlayerState(int userId, int roundId)
+        {
+            int combinationId = InitialCombination(roundId, userId);
 
-            if(botsCount > maxBotCount)
+            List<Card> card = new List<Card>();
+
+            var randomCard = GetRandomCard();
+            card.Add(randomCard);
+            GiveCard(combinationId, randomCard.CardId);
+
+            randomCard = GetRandomCard();
+            card.Add(randomCard);
+            GiveCard(combinationId, GetRandomCard().CardId);
+        }
+
+        private IEnumerable<User> AddBotsToGame(int botsCount, int roundId)
+        {
+            int maxBotCount = 6;
+
+            if (botsCount > maxBotCount)
             {
                 botsCount = maxBotCount;
             }
@@ -59,6 +78,14 @@ namespace BlackJack.BLL.Services
                 botsCount = 0;
             }
 
+            List<User> bots = _dbUser.GetAll().Where(x => x.IsBot).ToList();
+
+            for (int i = 0; i < botsCount; i++)
+            {
+                InitialPlayerState(bots[i].UserId, roundId);
+            }
+
+            return bots;
         }
 
         private int InitialPlayer(string playerName)
@@ -82,7 +109,7 @@ namespace BlackJack.BLL.Services
 
         private int InitialRound(int gameId)
         {
-            return _dbRound.Create(new Round { GameId = gameId });
+            return _dbRound.Create(new Round { GameId = gameId});
         }
 
         private Card GetRandomCard()

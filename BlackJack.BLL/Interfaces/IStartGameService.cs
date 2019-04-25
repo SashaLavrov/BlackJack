@@ -6,6 +6,6 @@ namespace BlackJack.BLL.Interfaces
 {
     public interface IStartGameService
     {
-        void StartNewGame(int botsCount, int userId);
+        int StartNewGame(int botsCount, string userName);
     }
 }

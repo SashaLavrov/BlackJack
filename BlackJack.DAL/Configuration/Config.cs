@@ -14,12 +14,11 @@ namespace BlackJack.DAL.Configuration
 {
     public static class Config
     {
-        public static IServiceCollection AddEF(this IServiceCollection services, string connectionString)
+        public static IServiceCollection AddDALServices(this IServiceCollection services, string connectionString)
 
         {
-            services.AddTransient<DbConnection>(provider => new SqlConnection(connectionString));
-
-            services.AddDbContext<ApplicationContext>(c => c.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
+            services.AddDbContext<ApplicationContext>(options =>
+                options.UseSqlServer(connectionString));
 
             services.AddTransient<ICardRepository, CardRepository>();
             services.AddTransient<IRepository<Game>, GameRepository>();

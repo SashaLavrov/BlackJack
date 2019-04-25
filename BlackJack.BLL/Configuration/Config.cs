@@ -1,20 +1,19 @@
 ﻿using BlackJack.BLL.Interfaces;
 using BlackJack.BLL.Services;
+using BlackJack.DAL.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Text;
 
 namespace BlackJack.BLL.Configuration
 {
     public static class Config
     {
-        public static IServiceCollection AddEF(this IServiceCollection services, string connectionString)
+        public static IServiceCollection AddBLLServices(this IServiceCollection services, string connectionString)
         {
-            services.AddEF(connectionString);
-            services.AddTransient<IStartGameService, StartGameService>();
+            services.AddDALServices(connectionString);
 
+            services.AddTransient<IStartGameService, StartGameService>();
+            services.AddTransient<IStateGameService, StateGameService>();
+            services.AddTransient<IGameService, GameService>();
             return services;
         }
     }

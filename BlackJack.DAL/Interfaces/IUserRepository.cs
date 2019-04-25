@@ -9,6 +9,7 @@ namespace BlackJack.DAL.Interfaces
     {
         IEnumerable<User> GetAll();
         User Get(int userId);
+        User Get(string userName);
         int Create(string name);
     }
 }

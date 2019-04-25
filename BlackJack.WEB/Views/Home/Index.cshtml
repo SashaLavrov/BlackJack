@@ -25,7 +25,11 @@ else
     <form method="post" asp-controller="Game" asp-action="Index">
         <div class="col-md-4 offset-md-4 form-group">
             <label for="bots">Bots</label>
-            <input type="number" name="botsCount" class="form-control" id="bots"/>
+            <input type="number" name="botsCount" class="form-control" id="bots" />
+
+            <label for="playerName">Player name</label>
+            <input type="text" name="playerName" class="form-control" id="playerName" />
+            <hr />
             <button type="submit" class="btn btn-outline-success form-control">Go Play</button>
         </div>
     </form>

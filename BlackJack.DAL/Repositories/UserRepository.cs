@@ -29,6 +29,11 @@ namespace BlackJack.DAL.Repositories
             return _db.Users.Where(x => x.UserId == userId).FirstOrDefault();
         }
 
+        public User Get(string userName)
+        {
+            return _db.Users.Where(x => x.Nickname == userName).FirstOrDefault();
+        }
+
         public IEnumerable<User> GetAll()
         {
             return _db.Users.ToList();

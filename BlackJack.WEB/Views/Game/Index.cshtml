@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+@model IEnumerable<BlackJack.BLL.Models.CurrentGameStateView>
+
+    <table class="table">
+        <thead>
+            <tr><th>UserId</th><th>Nickname</th><th>CardValue</th><th>CardSuit</th><th>CardType</th></tr>
+        </thead>
+        <tbody>
+            @foreach (var i in Model)
+            {
+            <tr>
+                <th>@i.PlayerId</th>
+                <th>@i.PlayerName</th>
+                <th>
+                    @foreach (var v in i.Cards)
+                    {
+                        @v.Value 
+                    }
+                </th>
+                <th>
+                    @foreach (var v in i.Cards)
+                    {
+                        @v.Suit 
+                    }
+                </th>
+                <th>
+                    @foreach (var v in i.Cards)
+                    {
+                        @v.Type
+                    }
+                </th>
+            </tr>
+            }
+        </tbody>
+    </table>
+
