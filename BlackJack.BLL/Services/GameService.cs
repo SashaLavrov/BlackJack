@@ -11,31 +11,30 @@ namespace BlackJack.BLL.Services
 {
     class GameService : IGameService
     {
-        private IRepository<Round> _dbRound;
-        private IRepository<Combination> _dbCombination;
-        private IRepository<ComboCard> _dbComboCard;
-        private ICardRepository _dbCard;
-        private IUserRepository _dbUser;
-        private IRepository<Game> _dbGame;
+        private IRepository<Round> _roundRepository;
+        private IRepository<Combination> _combinationRepository;
+        private IRepository<ComboCard> _comboCardRepository;
+        private ICardRepository _cardRepository;
+        private IUserRepository _userRepository;
+        private IRepository<Game> _gameRepository;
 
-        public GameService(IRepository<Round> dbRound,
-            IRepository<Combination> dbCombination,
-            IRepository<ComboCard> dbComboCard,
-            ICardRepository dbCard,
-            IRepository<Game> dbGame,
-            IUserRepository dbUser
-            )
+        public GameService(IRepository<Round> roundRepository,
+            IRepository<Combination> combinationRepository,
+            IRepository<ComboCard> comboCardRepository,
+            ICardRepository cardRepository,
+            IRepository<Game> gameRepository,
+            IUserRepository userRepository)
         {
-            _dbGame = dbGame;
-            _dbRound = dbRound;
-            _dbCombination = dbCombination;
-            _dbComboCard = dbComboCard;
-            _dbCard = dbCard;
-            _dbUser = dbUser;
+            _gameRepository = gameRepository;
+            _roundRepository = roundRepository;
+            _combinationRepository = combinationRepository;
+            _comboCardRepository = comboCardRepository;
+            _cardRepository = cardRepository;
+            _userRepository = userRepository;
         }
         public IEnumerable<GameView> GetAllGames()
         {
-            var allGame = _dbGame.GetAll();
+            var allGame = _gameRepository.GetAll();
 
             List<GameView> games = new List<GameView>();
 
@@ -51,15 +50,15 @@ namespace BlackJack.BLL.Services
         }
         public IEnumerable<User> GetAllPlayerFromGame(int gameId)
         {
-            var rounds = _dbRound.GetAll().Where(x => x.GameId == gameId);
+            var rounds = _roundRepository.GetAll().Where(x => x.GameId == gameId);
             int lastRoundId = rounds.Where(x => x.RoundNumber == rounds.Max(y => y.RoundNumber)).FirstOrDefault().RoundId;
-            var combinations = _dbCombination.GetAll().Where(x => x.RoundId == lastRoundId);
+            var combinations = _combinationRepository.GetAll().Where(x => x.RoundId == lastRoundId);
 
             List<User> players = new List<User>();
 
             foreach (var i in combinations)
             {
-                players.Add(_dbUser.Get(i.UserId)); 
+                players.Add(_userRepository.Get(i.UserId)); 
             }
             return players;
         }
@@ -70,7 +69,7 @@ namespace BlackJack.BLL.Services
             var players = GetAllPlayerFromGame(lastGame.GameId);
             var lastRound = GetLastRoundFromGame(lastGame.GameId);
             int nextRoundNum = lastRound.RoundNumber +1;
-            int nextRoundId = _dbRound.Create(new Round { GameId = lastGame.GameId, RoundNumber = nextRoundNum });
+            int nextRoundId = _roundRepository.Create(new Round { GameId = lastGame.GameId, RoundNumber = nextRoundNum });
 
             GiveInitialCards(nextRoundId, players);
         }
@@ -79,7 +78,7 @@ namespace BlackJack.BLL.Services
         {
             foreach (var i in players)
             {
-                _dbCombination.Create(new Combination {
+                _combinationRepository.Create(new Combination {
                     RoundId = roundId,
                     UserId = i.UserId
                 });
@@ -89,7 +88,7 @@ namespace BlackJack.BLL.Services
 
         public Round GetLastRoundFromGame(int gameId)
         {
-            var rounds = _dbRound.GetAll().Where(x => x.GameId == gameId);
+            var rounds = _roundRepository.GetAll().Where(x => x.GameId == gameId);
             var lastRound = rounds.Where(x => x.RoundNumber == rounds.Max(y => y.RoundNumber)).FirstOrDefault();
 
             return lastRound;
@@ -97,27 +96,27 @@ namespace BlackJack.BLL.Services
 
         public IEnumerable<Card> GetPlayersCardInRound(int playerId, int roundId)
         {
-            int combinationId = _dbCombination.GetAll().Where(x => x.RoundId == roundId && x.UserId == playerId).FirstOrDefault().CombinationId;
-            var tempRes = _dbComboCard.GetAll();
+            int combinationId = _combinationRepository.GetAll().Where(x => x.RoundId == roundId && x.UserId == playerId).FirstOrDefault().CombinationId;
+            var tempRes = _comboCardRepository.GetAll();
             var comboCard = tempRes.Where(x => x.CombinationId == combinationId).ToList();
 
             List<Card> Cards = new List<Card>();
 
             foreach (var i in comboCard)
             {
-                Cards.Add(_dbCard.GetCard(i.CardId));
+                Cards.Add(_cardRepository.GetCard(i.CardId));
             }
             return Cards;
         }
 
         public void Hit()
         {
-            var lastGame = LastGame().GameId;
-            var players = GetAllPlayerFromGame(lastGame);
+            var lastGameId = LastGame().GameId;
+            var players = GetAllPlayerFromGame(lastGameId);
             var player = players.Where(x => !x.IsBot && x.Nickname != "Dealer").FirstOrDefault();
-            var roundId = GetLastRoundFromGame(lastGame).RoundId;
+            var roundId = GetLastRoundFromGame(lastGameId).RoundId;
 
-            int combinatiomId = _dbCombination.GetAll().Where(x => x.RoundId == roundId && x.UserId == player.UserId).FirstOrDefault().CombinationId;
+            int combinatiomId = _combinationRepository.GetAll().Where(x => x.RoundId == roundId && x.UserId == player.UserId).FirstOrDefault().CombinationId;
 
             var cards = GetPlayersCardInRound(player.UserId, roundId);
             int currenSum = cards.Sum(x => x.Value);
@@ -143,7 +142,7 @@ namespace BlackJack.BLL.Services
         private bool GiveCardToBots()
         {
             bool marker = false;
-            var lastGame = LastGame().GameId;
+            int lastGame = LastGame().GameId;
             var players = GetAllPlayerFromGame(lastGame);
             int lastRound = GetLastRoundFromGame(lastGame).RoundId;
 
@@ -165,19 +164,19 @@ namespace BlackJack.BLL.Services
 
         private Combination GetCombination(int userId, int roundId)
         {
-            return _dbCombination.GetAll().Where(x => x.UserId == userId && x.RoundId == roundId).FirstOrDefault();
+            return _combinationRepository.GetAll().Where(x => x.UserId == userId && x.RoundId == roundId).FirstOrDefault();
         }
 
         private Card GetRandomCard()
         {
             Random random = new Random();
             int cardId = random.Next(2, 53);
-            return _dbCard.GetCard(cardId);
+            return _cardRepository.GetCard(cardId);
         }
 
         private int GiveCard(int combinationId, int cardId)
         {
-            return _dbComboCard.Create(new ComboCard { CombinationId = combinationId, CardId = cardId });
+            return _comboCardRepository.Create(new ComboCard { CombinationId = combinationId, CardId = cardId });
         }
 
         private bool IsCheckNeedsCard(int playerId, int roundId)
@@ -197,7 +196,7 @@ namespace BlackJack.BLL.Services
 
         private Game LastGame()
         {
-            var lastGame = _dbGame.GetAll().Where(x => x.GameDate == _dbGame.GetAll().Max(d => d.GameDate)).FirstOrDefault();
+            var lastGame = _gameRepository.GetAll().Where(x => x.GameDate == _gameRepository.GetAll().Max(d => d.GameDate)).FirstOrDefault();
             return lastGame;
         }
     }

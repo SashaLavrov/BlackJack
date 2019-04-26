@@ -10,47 +10,47 @@ namespace BlackJack.BLL.Services
 {
     public class StartGameService : IStartGameService
     {
-        private IRepository<Game> _dbGame;
-        private IRepository<Round> _dbRound;
-        private IRepository<Combination> _dbCombination;
-        private IRepository<ComboCard> _dbComboCard;
-        private ICardRepository _dbCard;
-        private IUserRepository _dbUser;
+        private IRepository<Game> _gameRepository;
+        private IRepository<Round> _roundRepository;
+        private IRepository<Combination> _combinationRepository;
+        private IRepository<ComboCard> _comboCardRepository;
+        private ICardRepository _cardRepository;
+        private IUserRepository _userRepository;
 
-        public StartGameService(IRepository<Game> dbGame,
-            IRepository<Round> dbRound,
-            IRepository<Combination> dbCombination,
-            IRepository<ComboCard> dbComboCard,
-            ICardRepository dbCard,
-            IUserRepository dbUser)
+        public StartGameService(IRepository<Game> gameRepository,
+            IRepository<Round> roundRepository,
+            IRepository<Combination> combinationRepository,
+            IRepository<ComboCard> comboCardRepository,
+            ICardRepository cardRepository,
+            IUserRepository userRepository)
         {
-            _dbGame = dbGame;
-            _dbRound = dbRound;
-            _dbCombination = dbCombination;
-            _dbComboCard = dbComboCard;
-            _dbCard = dbCard;
-            _dbUser = dbUser;
+            _gameRepository = gameRepository;
+            _roundRepository = roundRepository;
+            _combinationRepository = combinationRepository;
+            _comboCardRepository = comboCardRepository;
+            _cardRepository = cardRepository;
+            _userRepository = userRepository;
         }
 
         public int StartNewGame(int botsCount, string userName)
         {
-            int gameId = InitialGame();
-            int roundId = InitialRound(gameId);
+            int gameId = InitializationGame();
+            int roundId = InitializationRound(gameId);
 
             AddBotsToGame(botsCount, roundId);
             AddDealer(roundId);
-            InitialPlayerState(InitialPlayer(userName), roundId);
+            InitializationPlayerState(InitializationPlayer(userName), roundId);
 
             return gameId;
         }
         private void AddDealer(int roundId)
         {
             int dealerId = 1;
-            InitialPlayerState(dealerId, roundId);
+            InitializationPlayerState(dealerId, roundId);
         }
-        private void InitialPlayerState(int userId, int roundId)
+        private void InitializationPlayerState(int userId, int roundId)
         {
-            int combinationId = InitialCombination(roundId, userId);
+            int combinationId = InitializationCombination(roundId, userId);
 
             List<Card> card = new List<Card>();
 
@@ -76,23 +76,23 @@ namespace BlackJack.BLL.Services
                 botsCount = 0;
             }
 
-            List<User> bots = _dbUser.GetAll().Where(x => x.IsBot).ToList();
+            List<User> bots = _userRepository.GetAll().Where(x => x.IsBot).ToList();
 
             for (int i = 0; i < botsCount; i++)
             {
-                InitialPlayerState(bots[i].UserId, roundId);
+                InitializationPlayerState(bots[i].UserId, roundId);
             }
 
             return bots;
         }
 
-        private int InitialPlayer(string playerName)
+        private int InitializationPlayer(string playerName)
         {
-            var player = _dbUser.GetAll().Where(x => x.Nickname == playerName && x.IsBot == false).FirstOrDefault();
+            var player = _userRepository.GetAll().Where(x => x.Nickname == playerName && x.IsBot == false).FirstOrDefault();
 
             if (player == null)
             {
-                return _dbUser.Create(playerName);
+                return _userRepository.Create(playerName);
             }
             else
             {
@@ -100,31 +100,31 @@ namespace BlackJack.BLL.Services
             }
         }
 
-        private int InitialGame()
+        private int InitializationGame()
         {
-            return _dbGame.Create(new Game { GameDate = DateTime.Now });
+            return _gameRepository.Create(new Game { GameDate = DateTime.Now });
         }
 
-        private int InitialRound(int gameId)
+        private int InitializationRound(int gameId)
         {
-            return _dbRound.Create(new Round { GameId = gameId});
+            return _roundRepository.Create(new Round { GameId = gameId});
         }
 
         private Card GetRandomCard()
         {
             Random random = new Random();
             int cardId = random.Next(2, 53);
-            return _dbCard.GetCard(cardId);
+            return _cardRepository.GetCard(cardId);
         }
 
-        private int InitialCombination(int roundId, int playerId)
+        private int InitializationCombination(int roundId, int playerId)
         {
-            return _dbCombination.Create(new Combination { RoundId = roundId, UserId = playerId });
+            return _combinationRepository.Create(new Combination { RoundId = roundId, UserId = playerId });
         }
 
         private int GiveCard(int combinationId, int cardId)
         {
-            return _dbComboCard.Create(new ComboCard { CombinationId = combinationId, CardId = cardId });
+            return _comboCardRepository.Create(new ComboCard { CombinationId = combinationId, CardId = cardId });
         }
     }
 }

@@ -12,12 +12,12 @@ namespace BlackJack.BLL.Services
     {
         private IGameService _gameService;
         private IRepository<Game> _gameRepository;
-        private IRepository<Round> _dbRound;
-        public StateGameService(IGameService gameService, IRepository<Game> gameRepository, IRepository<Round> dbRound)
+        private IRepository<Round> _roundRepository;
+        public StateGameService(IGameService gameService, IRepository<Game> gameRepository, IRepository<Round> roundRepository)
         {
             _gameService = gameService;
             _gameRepository = gameRepository;
-            _dbRound = dbRound;
+            _roundRepository = roundRepository;
         }
         
         public IEnumerable<CurrentGameStateView> CurrentGameState()
@@ -79,7 +79,7 @@ namespace BlackJack.BLL.Services
 
         private IEnumerable<CurrentGameStateView> GetHistoryGames(int gameId)
         {
-            var rounds = _dbRound.GetAll().Where(x => x.GameId == gameId).ToList();
+            var rounds = _roundRepository.GetAll().Where(x => x.GameId == gameId).ToList();
 
             var players = _gameService.GetAllPlayerFromGame(gameId);
 
