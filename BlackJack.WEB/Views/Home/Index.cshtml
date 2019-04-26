@@ -5,33 +5,22 @@
 
 @if (!User.Identity.IsAuthenticated)
 {
-    <form method="post" asp-controller="Home" asp-action="GoPlay">
-        <input name="userName" type="text" list=@ViewBag.UserList autocomplete="on" id="name" />
-        <datalist id=@ViewBag.UserList>
-            @foreach (var item in ViewBag.UserList)
-            {
-                <option name=@item.UserName>@item.UserName</option>
-            }
-        </datalist>
-
-        <div>
-            <input type="submit" value="Далее" />
-        </div>
-    </form>
+    <a asp-controller="Account" asp-action="Login">Вход</a>
+    <a asp-controller="Account" asp-action="Register">Регистрация</a>
 }
 else
 {
-<div class="container">
-    <form method="post" asp-controller="Game" asp-action="Index">
-        <div class="col-md-4 offset-md-4 form-group">
-            <label for="bots">Bots</label>
-            <input type="number" name="botsCount" class="form-control" id="bots" />
+    <div class="container">
+        <form method="post" asp-controller="Home" asp-action="StartPlay">
+            <div class="col-md-4 offset-md-4 form-group">
+                <label for="bots">Bots</label>
+                <input type="number" name="botsCount" class="form-control" id="bots" />
 
-            <label for="playerName">Player name</label>
-            <input type="text" name="playerName" class="form-control" id="playerName" />
-            <hr />
-            <button type="submit" class="btn btn-outline-success form-control">Go Play</button>
-        </div>
-    </form>
-   </div>
+                <label for="playerName">Player name</label>
+                <input type="text" name="playerName" class="form-control" id="playerName" />
+                <hr />
+                <button type="submit" class="btn btn-outline-success form-control">Go Play</button>
+            </div>
+        </form>
+    </div>
 }

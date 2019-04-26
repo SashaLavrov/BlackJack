@@ -8,33 +8,27 @@ using BlackJack.WEB.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using AutoMapper;
+using BlackJack.BLL.Interfaces;
 
 namespace BlackJack.WEB.Controllers
 {
     public class HomeController : Controller
     {
-        private UserManager<User> _userManager;
-        public HomeController(UserManager<User> userManager)
+        private IStartGameService _startGameService;
+        public HomeController( IStartGameService startGameService)
         {
-            _userManager = userManager;
+            _startGameService = startGameService;
         }
         public IActionResult Index()
         {
-            ViewBag.UserList = _userManager.Users.ToList();
             return View();
         }
 
-        public IActionResult GoPlay(string userName)
+        [HttpPost]
+        public IActionResult StartPlay(int botsCount, string playerName)
         {
-            var users = _userManager.Users.ToList();
-            if (users.Where(x => x.UserName == userName).FirstOrDefault() == null)
-            {
-                return RedirectToAction("Register", "Account");
-            }
-            else
-            {
-                return RedirectToAction("Login", "Account");
-            }
+            _startGameService.StartNewGame(botsCount, playerName);
+            return RedirectToAction("Index", "Game");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

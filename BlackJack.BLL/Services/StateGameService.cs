@@ -2,7 +2,6 @@
 using BlackJack.BLL.Models;
 using BlackJack.DAL.Entities;
 using BlackJack.DAL.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,17 +11,24 @@ namespace BlackJack.BLL.Services
     class StateGameService : IStateGameService
     {
         private IGameService _gameService;
-
-        public StateGameService(IGameService gameService)
+        private IRepository<Game> _gameRepository;
+        private IRepository<Round> _dbRound;
+        public StateGameService(IGameService gameService, IRepository<Game> gameRepository, IRepository<Round> dbRound)
         {
             _gameService = gameService;
+            _gameRepository = gameRepository;
+            _dbRound = dbRound;
         }
         
-        public IEnumerable<CurrentGameStateView> CurrentGameState(int gameId)
+        public IEnumerable<CurrentGameStateView> CurrentGameState()
         {
-            return GetAllPlayersFromGame(gameId);
+            var lastGame = _gameRepository.GetAll().Where(x => x.GameDate == _gameRepository.GetAll().Max(d => d.GameDate)).FirstOrDefault();
+            if (lastGame != null)
+            {
+                return GetAllPlayersFromGame(lastGame.GameId);
+            }
+            return null;
         }
-
 
         private IEnumerable<CurrentGameStateView> GetAllPlayersFromGame(int gameId)
         {
@@ -64,6 +70,39 @@ namespace BlackJack.BLL.Services
                 });
             }
             return Cards;
+        }
+
+        public IEnumerable<CurrentGameStateView> GameState(int gameId)
+        {
+            return GetHistoryGames(gameId);
+        }
+
+        private IEnumerable<CurrentGameStateView> GetHistoryGames(int gameId)
+        {
+            var rounds = _dbRound.GetAll().Where(x => x.GameId == gameId).ToList();
+
+            var players = _gameService.GetAllPlayerFromGame(gameId);
+
+            List<CurrentGameStateView> result = new List<CurrentGameStateView>();
+
+            foreach (var r in rounds)
+            {
+                foreach (var i in players)
+                {
+                    var playerCards = GetPlayrsCard(i.UserId, r.RoundId);
+
+                    CurrentGameStateView item = new CurrentGameStateView
+                    {
+                        IsBot = i.IsBot,
+                        PlayerId = i.UserId,
+                        PlayerName = i.Nickname,
+                        Cards = playerCards,
+                    };
+
+                    result.Add(item);
+                }
+            }
+            return result;
         }
     }
 }

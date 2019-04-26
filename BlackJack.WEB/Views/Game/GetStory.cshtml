@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewData["Title"] = "GetStory";
+}
+@model IEnumerable<BlackJack.BLL.Models.GameView>
+
+<h1>GetStory</h1>
+
+<table class="table">
+    <thead>
+        <tr><th>GameId</th><th>Date</th><th></th></tr>
+    </thead>
+    <tbody>
+        @foreach (var i in Model)
+        {
+            <tr>
+                <th>@i.GameId</th>
+                <th>@i.GameDate</th>
+                <th>
+                    <form method="post" asp-controller="Game" asp-action="GetGameStory">
+                        <input type="text" name="gameId" value="@i.GameId" hidden />
+                        <button type="submit">More</button>
+                    </form>
+                </th>
+            </tr>
+        }
+    </tbody>
+</table>

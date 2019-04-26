@@ -1,11 +1,12 @@
-﻿using BlackJack.DAL.Entities;
+﻿using BlackJack.BLL.Models;
+using BlackJack.DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace BlackJack.BLL.Interfaces
 {
-    interface IGameService
+    public interface IGameService
     {
         IEnumerable<User> GetAllPlayerFromGame(int gameId);
 
@@ -13,6 +14,12 @@ namespace BlackJack.BLL.Interfaces
 
         IEnumerable<Card> GetPlayersCardInRound(int playerId, int roundId);
 
-        void Hit(int playerId, int roundId);
+        void Hit();
+
+        void FinishRound();
+
+        void StartNewRound();
+
+        IEnumerable<GameView> GetAllGames();
     }
 }

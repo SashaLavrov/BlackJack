@@ -43,8 +43,6 @@ namespace BlackJack.BLL.Services
 
             return gameId;
         }
-
-        //*******************************************************************//
         private void AddDealer(int roundId)
         {
             int dealerId = 1;

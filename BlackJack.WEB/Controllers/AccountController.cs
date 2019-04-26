@@ -29,7 +29,6 @@ namespace BlackJack.WEB.Controllers
             if (ModelState.IsValid)
             {
                 User user = new User { Email = model.Email, UserName = model.Email};
-                // добавляем пользователя
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

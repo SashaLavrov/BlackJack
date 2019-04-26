@@ -6,34 +6,30 @@
 
     <table class="table">
         <thead>
-            <tr><th>UserId</th><th>Nickname</th><th>CardValue</th><th>CardSuit</th><th>CardType</th></tr>
+            <tr><th>UserId</th><th>Nickname</th><th>Cards</th><th>TotalCount</th></tr>
         </thead>
         <tbody>
             @foreach (var i in Model)
             {
-            <tr>
-                <th>@i.PlayerId</th>
-                <th>@i.PlayerName</th>
-                <th>
-                    @foreach (var v in i.Cards)
-                    {
-                        @v.Value 
-                    }
-                </th>
-                <th>
-                    @foreach (var v in i.Cards)
-                    {
-                        @v.Suit 
-                    }
-                </th>
-                <th>
-                    @foreach (var v in i.Cards)
-                    {
-                        @v.Type
-                    }
-                </th>
-            </tr>
+                <tr>
+                    <th>@i.PlayerId</th>
+                    <th>@i.PlayerName</th>
+                    <th>
+                        @foreach (var v in i.Cards)
+                        {
+                            @(v.Type+" :: "+v.Suit + " || ")
+                        }
+                    </th>
+                    <th>@i.TotalCount</th>
+                </tr>
             }
         </tbody>
     </table>
+<div class="container">
+    <div class="col-md-4 offset-4">
+        <a asp-controller="Game" asp-action="Hitme">Hit</a>
+        <a asp-controller="Game" asp-action="FinishRound">Enough</a>
+        <a asp-controller="Game" asp-action="StartNewRound">FinishRound</a>
+    </div>
+</div>
 

@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewData["Title"] = "GetGameStory";
+}
+@model IEnumerable<BlackJack.BLL.Models.CurrentGameStateView>
+<h1>GetGameStory</h1>
+
+<table class="table">
+    <thead>
+        <tr><th>Name</th><th>Count</th><th>Cards</th></tr>
+    </thead>
+    <tbody>
+        @foreach (var i in Model)
+        {
+            <tr>
+                <th>@i.PlayerName</th>
+                <th>@i.TotalCount</th>
+                <th>
+                    @foreach (var v in i.Cards)
+                    {
+                        @(v.Type.ToString() + " :: " + v.Suit.ToString() + " || ");
+                    }
+                </th>
+            </tr>
+        }
+    </tbody>
+</table>
+
