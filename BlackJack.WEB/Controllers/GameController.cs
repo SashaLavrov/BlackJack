@@ -13,17 +13,17 @@ namespace BlackJack.WEB.Controllers
     public class GameController : Controller
     {
         private IGameService _gameService;
-        private IStateGameService _stateGameService;
-        public GameController(IStateGameService stateGameService, IGameService gameService)
+        private IGameStateService _gameStateService;
+        public GameController(IGameStateService gameStateService, IGameService gameService)
         {
             _gameService = gameService;
-            _stateGameService = stateGameService;
+            _gameStateService = gameStateService;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            IEnumerable<CurrentGameStateView> state = _stateGameService.CurrentGameState();
+            IEnumerable<CurrentGameStateView> state = _gameStateService.CurrentGameState();
 
             return View(state);
         }
@@ -57,7 +57,7 @@ namespace BlackJack.WEB.Controllers
         [HttpPost]
         public IActionResult GetGameStory(int gameId)
         {
-            return View(_stateGameService.GameState(gameId));
+            return View(_gameStateService.GameState(gameId));
         }
 
     }

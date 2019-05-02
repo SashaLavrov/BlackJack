@@ -12,6 +12,7 @@ using BlackJack.BLL.Interfaces;
 
 namespace BlackJack.WEB.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private IStartGameService _startGameService;

@@ -22,16 +22,6 @@ namespace BlackJack.DAL.Repositories
             _db.SaveChanges();
             return item.RoundId;
         }
-
-        public void Delete(int id)
-        {
-            Round round = _db.Rounds.Find(id);
-            if (round != null)
-            {
-                _db.Rounds.Remove(round);
-                _db.SaveChanges();
-            }
-        }
         public Round Get(int id) => _db.Rounds.Find(id);
 
         public IEnumerable<Round> GetAll() => _db.Rounds.ToList();

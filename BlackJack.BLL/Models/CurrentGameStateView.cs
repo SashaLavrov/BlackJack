@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace BlackJack.BLL.Models
@@ -14,12 +15,25 @@ namespace BlackJack.BLL.Models
         {
             get
             {
-                int sum = 0;
-                foreach (var i in Cards)
+                int currentSum = Cards.Sum(x => x.Value);
+
+                if (Cards.Where(x => x.Type == "ace").Count() > 0 && currentSum > 21)
                 {
-                    sum += i.Value;
+                    currentSum = 0;
+                    foreach (var i in Cards)
+                    {
+                        if (i.Type == "ace")
+                        {
+                            currentSum++;
+                        }
+                        else
+                        {
+                            currentSum += i.Value;
+                        }
+                    }
+                    return currentSum;
                 }
-                return sum;
+                return currentSum;
             }
         }
     }

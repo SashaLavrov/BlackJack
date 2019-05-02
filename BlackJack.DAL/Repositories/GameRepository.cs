@@ -23,15 +23,6 @@ namespace BlackJack.DAL.Repositories
             return item.GameId;
         }
 
-        public void Delete(int id)
-        {
-            Game game = _db.Games.Find(id);
-            if (game != null)
-            {
-                _db.Games.Remove(game);
-                _db.SaveChanges();
-            }
-        }
         public Game Get(int id) => _db.Games.Find(id);
 
         public IEnumerable<Game> GetAll() => _db.Games.ToList();

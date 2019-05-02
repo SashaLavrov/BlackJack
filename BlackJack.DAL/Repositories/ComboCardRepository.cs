@@ -24,15 +24,6 @@ namespace BlackJack.DAL.Repositories
             return item.ComboCardId;
         }
 
-        public void Delete(int id)
-        {
-            ComboCard comboCard = _db.ComboCards.Find(id);
-            if (comboCard != null)
-            {
-                _db.ComboCards.Remove(comboCard);
-                _db.SaveChanges();
-            }
-        }
         public ComboCard Get(int id) => _db.ComboCards.Find(id);
 
         public IEnumerable<ComboCard> GetAll() => _db.ComboCards.ToList();

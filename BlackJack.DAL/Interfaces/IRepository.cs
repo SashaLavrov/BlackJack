@@ -10,6 +10,5 @@ namespace BlackJack.DAL.Interfaces
         T Get(int id);
         int Create(T item);
         void Update(T item);
-        void Delete(int id);
     }
 }

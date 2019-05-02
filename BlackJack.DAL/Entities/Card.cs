@@ -7,6 +7,18 @@ namespace BlackJack.DAL.Entities
 {
     public class Card
     {
+        public Card(int cardId, int val, string type, string suit)
+        {
+            CardId = cardId;
+            Value = val;
+            Type = type;
+            Suit = suit;
+        }
+
+        public Card()
+        {
+
+        }
         [Key]
         public int CardId { get; set; }
 

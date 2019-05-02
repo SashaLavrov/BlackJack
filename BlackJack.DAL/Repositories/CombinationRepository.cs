@@ -24,15 +24,6 @@ namespace BlackJack.DAL.Repositories
             return item.CombinationId;
         }
 
-        public void Delete(int id)
-        {
-            Combination combination = _db.Combinations.Find(id);
-            if (combination != null)
-            {
-                _db.Combinations.Remove(combination);
-                _db.SaveChanges();
-            }
-        }
         public Combination Get(int id) => _db.Combinations.Find(id);
 
         public IEnumerable<Combination> GetAll() => _db.Combinations.ToList();

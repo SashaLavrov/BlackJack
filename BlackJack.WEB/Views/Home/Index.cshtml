@@ -3,12 +3,7 @@
 }
 
 
-@if (!User.Identity.IsAuthenticated)
-{
-    <a asp-controller="Account" asp-action="Login">Вход</a>
-    <a asp-controller="Account" asp-action="Register">Регистрация</a>
-}
-else
+@if (User.Identity.IsAuthenticated)
 {
     <div class="container">
         <form method="post" asp-controller="Home" asp-action="StartPlay">
@@ -24,3 +19,4 @@ else
         </form>
     </div>
 }
+

@@ -35,8 +35,26 @@
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
+                                <form method="post" asp-controller="Game" asp-action="GetStory" class="navbar-right">
+                                    <button type="submit" class="btn btn-link navbar-btn navbar-link text-dark">Game Story</button>
+                                </form>
+                            </li>
+                            <li class="nav-item">
                                 <form method="post" asp-controller="Account" asp-action="LogOff" class="navbar-right">
                                     <button type="submit" class="btn btn-link navbar-btn navbar-link text-dark">Log out</button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <form method="post" asp-controller="Account" asp-action="Login" class="navbar-right">
+                                    <button type="submit" class="btn btn-link navbar-btn navbar-link text-dark">Login</button>
+                                </form>
+                            </li>
+                            <li class="nav-item">
+                                <form method="post" asp-controller="Account" asp-action="Register" class="navbar-right">
+                                    <button type="submit" class="btn btn-link navbar-btn navbar-link text-dark">Register</button>
                                 </form>
                             </li>
                         }

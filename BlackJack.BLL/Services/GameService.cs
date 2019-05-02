@@ -1,4 +1,5 @@
-﻿using BlackJack.BLL.Interfaces;
+﻿using BlackJack.BLL.Constants;
+using BlackJack.BLL.Interfaces;
 using BlackJack.BLL.Models;
 using BlackJack.DAL.Entities;
 using BlackJack.DAL.Interfaces;
@@ -34,18 +35,16 @@ namespace BlackJack.BLL.Services
         }
         public IEnumerable<GameView> GetAllGames()
         {
-            var allGame = _gameRepository.GetAll();
-
+            var allGames = _gameRepository.GetAll();
             List<GameView> games = new List<GameView>();
 
-            foreach (var i in allGame)
+            foreach (var i in allGames)
             {
                 games.Add(new GameView {
                     GameId = i.GameId,
                     GameDate = i.GameDate
                 });
             }
-
             return games;
         }
         public IEnumerable<User> GetAllPlayerFromGame(int gameId)
@@ -83,7 +82,8 @@ namespace BlackJack.BLL.Services
                     UserId = i.UserId
                 });
             }
-            Hit(); Hit();
+            Hit();
+            Hit();
         }
 
         public Round GetLastRoundFromGame(int gameId)
@@ -116,17 +116,42 @@ namespace BlackJack.BLL.Services
             var player = players.Where(x => !x.IsBot && x.Nickname != "Dealer").FirstOrDefault();
             var roundId = GetLastRoundFromGame(lastGameId).RoundId;
 
-            int combinatiomId = _combinationRepository.GetAll().Where(x => x.RoundId == roundId && x.UserId == player.UserId).FirstOrDefault().CombinationId;
+            int combinatiomId = _combinationRepository.GetAll()
+                .Where(x => x.RoundId == roundId && x.UserId == player.UserId)
+                .FirstOrDefault().CombinationId;
 
             var cards = GetPlayersCardInRound(player.UserId, roundId);
-            int currenSum = cards.Sum(x => x.Value);
+            int currentSum = SumOfCards(cards);
 
-            if (currenSum < 21)
+            if (currentSum < ConstantsValue.MaxSum)
             {
                 GiveCard(combinatiomId, GetRandomCard().CardId);
             }
 
             GiveCardToBots();
+        }
+
+        private int SumOfCards(IEnumerable<Card> cards)
+        {
+            int currentSum = cards.Sum(x => x.Value);
+
+            if(cards.Where(x => x.Type == "ace").Count() > 0 && currentSum > 21)
+            {
+                currentSum = 0;
+                foreach (var i in cards)
+                {
+                    if (i.Type == "ace")
+                    {
+                        currentSum++;
+                    }
+                    else
+                    {
+                        currentSum += i.Value;
+                    }
+                }
+                return currentSum;
+            }
+            return currentSum;
         }
 
         public void FinishRound()
@@ -167,10 +192,10 @@ namespace BlackJack.BLL.Services
             return _combinationRepository.GetAll().Where(x => x.UserId == userId && x.RoundId == roundId).FirstOrDefault();
         }
 
-        private Card GetRandomCard()
+        public Card GetRandomCard()
         {
             Random random = new Random();
-            int cardId = random.Next(2, 53);
+            int cardId = random.Next(ConstantsValue.FirstCardId, ConstantsValue.LastCardId);
             return _cardRepository.GetCard(cardId);
         }
 
@@ -181,10 +206,9 @@ namespace BlackJack.BLL.Services
 
         private bool IsCheckNeedsCard(int playerId, int roundId)
         {
-            int maxTotalSum = 17;
             var cards = GetPlayersCardInRound(playerId, roundId);
-            int currenSum = cards.Sum(x => x.Value);
-            if(currenSum < maxTotalSum)
+            int currenSum = SumOfCards(cards);
+            if(currenSum < ConstantsValue.MaxTotalSum)
             {
                 return true;
             }

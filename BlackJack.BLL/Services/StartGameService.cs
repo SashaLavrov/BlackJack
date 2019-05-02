@@ -1,4 +1,5 @@
-﻿using BlackJack.BLL.Interfaces;
+﻿using BlackJack.BLL.Constants;
+using BlackJack.BLL.Interfaces;
 using BlackJack.DAL.Entities;
 using BlackJack.DAL.Interfaces;
 using System;
@@ -16,13 +17,15 @@ namespace BlackJack.BLL.Services
         private IRepository<ComboCard> _comboCardRepository;
         private ICardRepository _cardRepository;
         private IUserRepository _userRepository;
+        private IGameService _gameService;
 
         public StartGameService(IRepository<Game> gameRepository,
             IRepository<Round> roundRepository,
             IRepository<Combination> combinationRepository,
             IRepository<ComboCard> comboCardRepository,
             ICardRepository cardRepository,
-            IUserRepository userRepository)
+            IUserRepository userRepository,
+            IGameService gameService)
         {
             _gameRepository = gameRepository;
             _roundRepository = roundRepository;
@@ -30,6 +33,7 @@ namespace BlackJack.BLL.Services
             _comboCardRepository = comboCardRepository;
             _cardRepository = cardRepository;
             _userRepository = userRepository;
+            _gameService = gameService;
         }
 
         public int StartNewGame(int botsCount, string userName)
@@ -45,35 +49,28 @@ namespace BlackJack.BLL.Services
         }
         private void AddDealer(int roundId)
         {
-            int dealerId = 1;
-            InitializationPlayerState(dealerId, roundId);
+            InitializationPlayerState(ConstantsValue.DealerId, roundId);
         }
         private void InitializationPlayerState(int userId, int roundId)
         {
             int combinationId = InitializationCombination(roundId, userId);
 
-            List<Card> card = new List<Card>();
-
-            var randomCard = GetRandomCard();
-            card.Add(randomCard);
+            var randomCard = _gameService.GetRandomCard();
             GiveCard(combinationId, randomCard.CardId);
 
-            randomCard = GetRandomCard();
-            card.Add(randomCard);
-            GiveCard(combinationId, GetRandomCard().CardId);
+            randomCard = _gameService.GetRandomCard();
+            GiveCard(combinationId, randomCard.CardId);
         }
 
         private IEnumerable<User> AddBotsToGame(int botsCount, int roundId)
         {
-            int maxBotCount = 6;
-
-            if (botsCount > maxBotCount)
+            if (botsCount > ConstantsValue.MaxBotCount)
             {
-                botsCount = maxBotCount;
+                botsCount = ConstantsValue.MaxBotCount;
             }
-            else if(botsCount < 0)
+            else if(botsCount < ConstantsValue.MinBotCount)
             {
-                botsCount = 0;
+                botsCount = ConstantsValue.MinBotCount;
             }
 
             List<User> bots = _userRepository.GetAll().Where(x => x.IsBot).ToList();
@@ -108,13 +105,6 @@ namespace BlackJack.BLL.Services
         private int InitializationRound(int gameId)
         {
             return _roundRepository.Create(new Round { GameId = gameId});
-        }
-
-        private Card GetRandomCard()
-        {
-            Random random = new Random();
-            int cardId = random.Next(2, 53);
-            return _cardRepository.GetCard(cardId);
         }
 
         private int InitializationCombination(int roundId, int playerId)

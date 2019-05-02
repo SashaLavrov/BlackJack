@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BlackJack.BLL.Interfaces
 {
-    public interface IStateGameService
+    public interface IGameStateService
     {
         IEnumerable<CurrentGameStateView> CurrentGameState();
         IEnumerable<CurrentGameStateView> GameState(int gameId);
