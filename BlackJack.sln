@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackJack.DAL", "BlackJack.DAL\BlackJack.DAL.csproj", "{5B917759-CEF4-4DF1-B691-8862E332796D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlackJack.DAL", "BlackJack.DAL\BlackJack.DAL.csproj", "{5B917759-CEF4-4DF1-B691-8862E332796D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackJack.WEB", "BlackJack.WEB\BlackJack.WEB.csproj", "{DA795197-9A65-4EBF-89B4-D22F5B44D1E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlackJack.WEB", "BlackJack.WEB\BlackJack.WEB.csproj", "{DA795197-9A65-4EBF-89B4-D22F5B44D1E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackJack.BLL", "BlackJack.BLL\BlackJack.BLL.csproj", "{8F7E6AAE-83CC-44EC-8AD4-D83535E7FC7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlackJack.BLL", "BlackJack.BLL\BlackJack.BLL.csproj", "{8F7E6AAE-83CC-44EC-8AD4-D83535E7FC7E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackJack.UI", "BlackJack.UI\BlackJack.UI.csproj", "{435C4CD9-AC3B-47F9-8FB8-42871906D071}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{8F7E6AAE-83CC-44EC-8AD4-D83535E7FC7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F7E6AAE-83CC-44EC-8AD4-D83535E7FC7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F7E6AAE-83CC-44EC-8AD4-D83535E7FC7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{435C4CD9-AC3B-47F9-8FB8-42871906D071}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{435C4CD9-AC3B-47F9-8FB8-42871906D071}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{435C4CD9-AC3B-47F9-8FB8-42871906D071}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{435C4CD9-AC3B-47F9-8FB8-42871906D071}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

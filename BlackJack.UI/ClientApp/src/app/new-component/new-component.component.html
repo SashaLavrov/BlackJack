@@ -1,0 +1,22 @@
+<p>
+  Hello {{message}}
+</p>
+<hr>
+<button *ngIf="isCollapsed" (click)="toggleCollapse()">otobrazit</button>
+<button *ngIf="!isCollapsed" (click)="toggleCollapse()">spryatot</button>
+<div *ngIf="!isCollapsed">
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat, voluptatibus.
+  </p>
+</div>
+<hr>
+<div>
+  <input type="text" [(ngModel)]="textVar">
+  <p>{{textVar}}</p>
+</div>
+<hr>
+<div [ngClass]="{invisible: visibility}">
+  <h1>Hello world</h1>
+  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, ratione.</p>
+</div>
+<button (click)="toggle()">Toggle</button>

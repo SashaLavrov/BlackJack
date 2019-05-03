@@ -49,6 +49,7 @@ namespace BlackJack.WEB.Controllers
             return RedirectToAction("Index", "Game");
         }
 
+        [HttpGet]
         public IActionResult GetStory()
         {
             return View(_gameService.GetAllGames());
@@ -59,6 +60,5 @@ namespace BlackJack.WEB.Controllers
         {
             return View(_gameStateService.GameState(gameId));
         }
-
     }
 }
