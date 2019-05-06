@@ -39,7 +39,18 @@ namespace BlackJack.WEB.Controllers
         [HttpGet("test")]
         public IActionResult Test()
         {
-            return Ok("This text");
+            user user = new user
+            {
+                Name = "Vitamin4ik",
+                Age = 22
+            };
+            return Ok(user);
+        }
+
+        public class user
+        {
+            public string Name { get; set; }
+            public int Age { get; set; }
         }
 
         [AllowAnonymous]
