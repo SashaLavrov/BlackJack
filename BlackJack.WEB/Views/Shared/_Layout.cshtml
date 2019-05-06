@@ -35,7 +35,7 @@
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <form method="post" asp-controller="Game" asp-action="GetStory" class="navbar-right">
+                                <form method="get" asp-controller="Game" asp-action="GetStory" class="navbar-right">
                                     <button type="submit" class="btn btn-link navbar-btn navbar-link text-dark">Game Story</button>
                                 </form>
                             </li>

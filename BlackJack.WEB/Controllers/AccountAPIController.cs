@@ -7,6 +7,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using BlackJack.WEB.Models;
+using BlackJack.WEB.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -35,7 +36,6 @@ namespace BlackJack.WEB.Controllers
             _configuration = configuration;
         }
 
-        [AllowAnonymous]
         [HttpGet("test")]
         public IActionResult Test()
         {
@@ -55,7 +55,7 @@ namespace BlackJack.WEB.Controllers
 
         [AllowAnonymous]
         [HttpPost("Login")]
-        public async Task<object> Login([FromBody] LoginDto model)
+        public async Task<object> Login([FromBody] LoginView model)
         {
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
 
@@ -69,7 +69,7 @@ namespace BlackJack.WEB.Controllers
 
         [AllowAnonymous]
         [HttpPost("Register")]
-        public async Task<object> Register([FromBody] RegisterDto model)
+        public async Task<object> Register([FromBody] RegisterView model)
         {
             var user = new User
             {
@@ -109,26 +109,5 @@ namespace BlackJack.WEB.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-
-    }
-
-    public class LoginDto
-    {
-        [Required]
-        public string Email { get; set; }
-
-        [Required]
-        public string Password { get; set; }
-
-    }
-
-    public class RegisterDto
-    {
-        [Required]
-        public string Email { get; set; }
-
-        [Required]
-        [StringLength(100, ErrorMessage = "PASSWORD_MIN_LENGTH", MinimumLength = 6)]
-        public string Password { get; set; }
     }
 }

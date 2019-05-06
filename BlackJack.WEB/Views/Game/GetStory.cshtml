@@ -17,7 +17,7 @@
                 <th>@i.GameId</th>
                 <th>@i.GameDate</th>
                 <th>
-                    <form method="post" asp-controller="Game" asp-action="GetGameStory">
+                    <form method="get" asp-controller="Game" asp-action="GetGameStory">
                         <input type="text" name="gameId" value="@i.GameId" hidden />
                         <button type="submit">More</button>
                     </form>

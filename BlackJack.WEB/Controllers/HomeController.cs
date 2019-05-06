@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using BlackJack.WEB.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using AutoMapper;
 using BlackJack.BLL.Interfaces;
+
 
 namespace BlackJack.WEB.Controllers
 {
@@ -26,10 +21,14 @@ namespace BlackJack.WEB.Controllers
         }
 
         [HttpPost]
-        public IActionResult StartPlay(int botsCount, string playerName)
+        public IActionResult StartPlay(StartGameView model)
         {
-            _startGameService.StartNewGame(botsCount, playerName);
-            return RedirectToAction("Index", "Game");
+            if (!string.IsNullOrEmpty(model.PlayerName))
+            {
+                _startGameService.StartNewGame(model.BotsCount, model.PlayerName);
+                return RedirectToAction("Index", "Game");
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

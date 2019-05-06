@@ -9,10 +9,10 @@
         <form method="post" asp-controller="Home" asp-action="StartPlay">
             <div class="col-md-4 offset-md-4 form-group">
                 <label for="bots">Bots</label>
-                <input type="number" name="botsCount" class="form-control" id="bots" />
+                <input type="number" name="botsCount" class="form-control" id="bots" min="0" max="6" />
 
                 <label for="playerName">Player name</label>
-                <input type="text" name="playerName" class="form-control" id="playerName" />
+                <input type="text" name="playerName" class="form-control" id="playerName" value="player"/>
                 <hr />
                 <button type="submit" class="btn btn-outline-success form-control">Go Play</button>
             </div>
