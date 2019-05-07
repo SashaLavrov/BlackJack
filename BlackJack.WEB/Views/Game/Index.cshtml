@@ -1,35 +1,36 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Index";
 }
-@model IEnumerable<BlackJack.BLL.Models.CurrentGameStateView>
-
-    <table class="table">
-        <thead>
-            <tr><th>UserId</th><th>Nickname</th><th>Cards</th><th>TotalCount</th></tr>
-        </thead>
-        <tbody>
-            @foreach (var i in Model)
-            {
-                <tr>
-                    <th>@i.PlayerId</th>
-                    <th>@i.PlayerName</th>
-                    <th>
-                        @foreach (var v in i.Cards)
-                        {
-                            @(v.Type+" :: "+v.Suit + " || ")
-                        }
-                    </th>
-                    <th>@i.TotalCount</th>
-                </tr>
-            }
-        </tbody>
-    </table>
+@model IEnumerable<BlackJack.BLL.Models.CurrentPlayerStateView>
+@using BlackJack.WEB.WEBConstants;
+<table class="table">
+    <thead>
+        <tr><th>UserId</th><th>Nickname</th><th>Cards</th><th>TotalCount</th></tr>
+    </thead>
+    <tbody>
+        @foreach (var i in Model)
+        {
+            <tr>
+                <th>@i.PlayerId</th>
+                <th>@i.PlayerName</th>
+                <th>
+                    @foreach (var v in i.Cards)
+                    {
+                        @(v.Type.ToString() + " ::");
+                        <img height="18" width="18" src="@WEBConstant.GetLink(v.Suit.ToString()).ToString()" />
+                    }
+                </th>
+                <th>@i.TotalCount</th>
+            </tr>
+        }
+    </tbody>
+</table>
 <div class="container">
     <div class="col-md-4 offset-4">
-        <a asp-controller="Game" asp-action="Hitme">Hit</a>
-        <a asp-controller="Game" asp-action="FinishRound">Enough</a>
-        <a asp-controller="Game" asp-action="StartNewRound">FinishRound</a>
+        <a asp-controller="Game" asp-action="Hitme" class="btn btn-danger">Hit</a>
+        <a asp-controller="Game" asp-action="FinishRound" class="btn btn-success">Enough</a>
+        <a asp-controller="Game" asp-action="StartNewRound" class="btn btn-primary">FinishRound</a>
     </div>
 </div>
+
 

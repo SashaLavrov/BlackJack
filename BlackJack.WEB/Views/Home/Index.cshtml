@@ -12,11 +12,15 @@
                 <input type="number" name="botsCount" class="form-control" id="bots" min="0" max="6" />
 
                 <label for="playerName">Player name</label>
-                <input type="text" name="playerName" class="form-control" id="playerName" value="player"/>
+                <input type="text" name="playerName" class="form-control" id="playerName" value="player" />
                 <hr />
                 <button type="submit" class="btn btn-outline-success form-control">Go Play</button>
             </div>
         </form>
+        <div class="col-md-4 offset-md-4 form-group">
+            <hr />
+            <a asp-controller="Game" asp-action="Index" class="btn btn-outline-info form-control">Continue the last game</a>
+        </div>
     </div>
 }
 

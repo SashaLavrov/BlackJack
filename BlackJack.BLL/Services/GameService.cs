@@ -40,7 +40,8 @@ namespace BlackJack.BLL.Services
 
             foreach (var i in allGames)
             {
-                games.Add(new GameView {
+                games.Add(new GameView
+                {
                     GameId = i.GameId,
                     GameDate = i.GameDate
                 });
@@ -57,7 +58,7 @@ namespace BlackJack.BLL.Services
 
             foreach (var i in combinations)
             {
-                players.Add(_userRepository.Get(i.UserId)); 
+                players.Add(_userRepository.Get(i.UserId));
             }
             return players;
         }
@@ -67,7 +68,7 @@ namespace BlackJack.BLL.Services
             var lastGame = LastGame();
             var players = GetAllPlayerFromGame(lastGame.GameId);
             var lastRound = GetLastRoundFromGame(lastGame.GameId);
-            int nextRoundNum = lastRound.RoundNumber +1;
+            int nextRoundNum = lastRound.RoundNumber + 1;
             int nextRoundId = _roundRepository.Create(new Round { GameId = lastGame.GameId, RoundNumber = nextRoundNum });
 
             GiveInitialCards(nextRoundId, players);
@@ -77,7 +78,8 @@ namespace BlackJack.BLL.Services
         {
             foreach (var i in players)
             {
-                _combinationRepository.Create(new Combination {
+                _combinationRepository.Create(new Combination
+                {
                     RoundId = roundId,
                     UserId = i.UserId
                 });
@@ -135,7 +137,7 @@ namespace BlackJack.BLL.Services
         {
             int currentSum = cards.Sum(x => x.Value);
 
-            if(cards.Where(x => x.Type == "ace").Count() > 0 && currentSum > 21)
+            if (cards.Where(x => x.Type == "ace").Count() > 0 && currentSum > 21)
             {
                 currentSum = 0;
                 foreach (var i in cards)
@@ -182,7 +184,7 @@ namespace BlackJack.BLL.Services
                     {
                         marker = true;
                     }
-                } 
+                }
             }
             return marker;
         }
@@ -208,7 +210,7 @@ namespace BlackJack.BLL.Services
         {
             var cards = GetPlayersCardInRound(playerId, roundId);
             int currenSum = SumOfCards(cards);
-            if(currenSum < ConstantsValue.MaxTotalSum)
+            if (currenSum < ConstantsValue.MaxTotalSum)
             {
                 return true;
             }

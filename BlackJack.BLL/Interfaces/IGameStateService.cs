@@ -7,7 +7,7 @@ namespace BlackJack.BLL.Interfaces
 {
     public interface IGameStateService
     {
-        IEnumerable<CurrentGameStateView> CurrentGameState();
-        IEnumerable<CurrentGameStateView> GameState(int gameId);
+        IEnumerable<CurrentPlayerStateView> CurrentGameState();
+        IEnumerable<IEnumerable<CurrentPlayerStateView>> GameState(int gameId);
     }
 }

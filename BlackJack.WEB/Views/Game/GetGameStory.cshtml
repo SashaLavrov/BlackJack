@@ -1,27 +1,32 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "GetGameStory";
 }
-@model IEnumerable<BlackJack.BLL.Models.CurrentGameStateView>
+@model IEnumerable<IEnumerable<BlackJack.BLL.Models.CurrentPlayerStateView>>
+@using BlackJack.WEB.WEBConstants;
 <h1>GetGameStory</h1>
 
 <table class="table">
     <thead>
-        <tr><th>Name</th><th>Count</th><th>Cards</th></tr>
+        <tr><th>Round#</th><th>Name</th><th>Count</th><th>Cards</th></tr>
     </thead>
     <tbody>
         @foreach (var i in Model)
         {
-            <tr>
-                <th>@i.PlayerName</th>
-                <th>@i.TotalCount</th>
-                <th>
-                    @foreach (var v in i.Cards)
-                    {
-                        @(v.Type.ToString() + " :: " + v.Suit.ToString() + " || ");
-                    }
-                </th>
-            </tr>
+            foreach (var r in i)
+            {
+                <tr>
+                    <th>@(r.RoundNumber + 1)</th>
+                    <th>@r.PlayerName</th>
+                    <th>@r.TotalCount</th>
+                    <th>
+                        @foreach (var v in r.Cards)
+                        {
+                            @(v.Type.ToString() + " ::");
+                            <img height="18" width="18" src="@WEBConstant.GetLink(v.Suit.ToString()).ToString()" />
+                        }
+                    </th>
+                </tr>
+            }
         }
     </tbody>
 </table>

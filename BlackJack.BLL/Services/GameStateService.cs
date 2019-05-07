@@ -22,8 +22,8 @@ namespace BlackJack.BLL.Services
             _roundRepository = roundRepository;
             _mapper = mapper;
         }
-        
-        public IEnumerable<CurrentGameStateView> CurrentGameState()
+
+        public IEnumerable<CurrentPlayerStateView> CurrentGameState()
         {
             var lastGame = _gameRepository.GetAll().Where(x => x.GameDate == _gameRepository.GetAll().Max(d => d.GameDate)).FirstOrDefault();
             if (lastGame != null)
@@ -33,19 +33,19 @@ namespace BlackJack.BLL.Services
             return null;
         }
 
-        private IEnumerable<CurrentGameStateView> GetAllPlayersFromGame(int gameId)
+        private IEnumerable<CurrentPlayerStateView> GetAllPlayersFromGame(int gameId)
         {
             int lastRoundId = _gameService.GetLastRoundFromGame(gameId).RoundId;
 
             var players = _gameService.GetAllPlayerFromGame(gameId);
 
-            List<CurrentGameStateView> result = new List<CurrentGameStateView>();
+            List<CurrentPlayerStateView> result = new List<CurrentPlayerStateView>();
 
             foreach (var i in players)
             {
                 var playerCards = GetPlayrsCard(i.UserId, lastRoundId);
 
-                CurrentGameStateView item = new CurrentGameStateView
+                CurrentPlayerStateView item = new CurrentPlayerStateView
                 {
                     IsBot = i.IsBot,
                     PlayerId = i.UserId,
@@ -58,38 +58,38 @@ namespace BlackJack.BLL.Services
             return result;
         }
 
-        private IEnumerable<CardCurentGameStateViewItem> GetPlayrsCard(int playerId ,int roundId)
+        private IEnumerable<CurrentCardPlayerStateViewItem> GetPlayrsCard(int playerId, int roundId)
         {
             var cards = _gameService.GetPlayersCardInRound(playerId, roundId);
-            List<CardCurentGameStateViewItem> Cards = new List<CardCurentGameStateViewItem>();
+            List<CurrentCardPlayerStateViewItem> Cards = new List<CurrentCardPlayerStateViewItem>();
 
-            foreach(var i in cards)
+            foreach (var i in cards)
             {
-                Cards.Add(_mapper.Map<CardCurentGameStateViewItem>(i));
+                Cards.Add(_mapper.Map<CurrentCardPlayerStateViewItem>(i));
             }
             return Cards;
         }
 
-        public IEnumerable<CurrentGameStateView> GameState(int gameId)
+        public IEnumerable<IEnumerable<CurrentPlayerStateView>> GameState(int gameId)
         {
             return GetHistoryGames(gameId);
         }
 
-        private IEnumerable<CurrentGameStateView> GetHistoryGames(int gameId)
+        private IEnumerable<IEnumerable<CurrentPlayerStateView>> GetHistoryGames(int gameId)
         {
             var rounds = _roundRepository.GetAll().Where(x => x.GameId == gameId).ToList();
             var players = _gameService.GetAllPlayerFromGame(gameId);
-
-            List<CurrentGameStateView> result = new List<CurrentGameStateView>();
-
+            List<List<CurrentPlayerStateView>> res = new List<List<CurrentPlayerStateView>>();
             foreach (var r in rounds)
             {
+                List<CurrentPlayerStateView> result = new List<CurrentPlayerStateView>();
                 foreach (var p in players)
                 {
                     var playerCards = GetPlayrsCard(p.UserId, r.RoundId);
 
-                    CurrentGameStateView item = new CurrentGameStateView
+                    CurrentPlayerStateView item = new CurrentPlayerStateView
                     {
+                        RoundNumber = r.RoundNumber,
                         IsBot = p.IsBot,
                         PlayerId = p.UserId,
                         PlayerName = p.Nickname,
@@ -97,8 +97,9 @@ namespace BlackJack.BLL.Services
                     };
                     result.Add(item);
                 }
+                res.Add(result);
             }
-            return result;
+            return res;
         }
     }
 }

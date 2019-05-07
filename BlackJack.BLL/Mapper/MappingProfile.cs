@@ -11,8 +11,8 @@ namespace BlackJack.BLL.Mapper
     {
         public MappingProfile()
         {
-            CreateMap<Card, CardCurentGameStateViewItem>();
-            CreateMap<CardCurentGameStateViewItem, Card>();
+            CreateMap<Card, CurrentCardPlayerStateViewItem>();
+            CreateMap<CurrentCardPlayerStateViewItem, Card>();
         }
     }
 }

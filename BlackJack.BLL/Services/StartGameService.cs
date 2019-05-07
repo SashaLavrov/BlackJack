@@ -68,7 +68,7 @@ namespace BlackJack.BLL.Services
             {
                 botsCount = ConstantsValue.MaxBotCount;
             }
-            else if(botsCount < ConstantsValue.MinBotCount)
+            else if (botsCount < ConstantsValue.MinBotCount)
             {
                 botsCount = ConstantsValue.MinBotCount;
             }
@@ -104,7 +104,7 @@ namespace BlackJack.BLL.Services
 
         private int InitializationRound(int gameId)
         {
-            return _roundRepository.Create(new Round { GameId = gameId});
+            return _roundRepository.Create(new Round { GameId = gameId });
         }
 
         private int InitializationCombination(int roundId, int playerId)
