@@ -36,6 +36,7 @@ namespace BlackJack.WEB.Controllers
             _configuration = configuration;
         }
 
+        [AllowAnonymous]
         [HttpGet("test")]
         public IActionResult Test()
         {
@@ -46,6 +47,18 @@ namespace BlackJack.WEB.Controllers
             };
             return Ok(user);
         }
+
+        [AllowAnonymous]
+        [HttpPost("testPOST")]
+        public IActionResult testPOST([FromBody] user user)
+        {
+            if (!string.IsNullOrEmpty(user.Name) && user.Age != 0)
+            {
+                return Ok(user);
+            }
+            return BadRequest(user);
+        }
+        
 
         public class user
         {
@@ -62,7 +75,7 @@ namespace BlackJack.WEB.Controllers
             if (result.Succeeded)
             {
                 var appUser = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
-                return Ok(await GenerateJwtToken(model.Email, appUser));
+                return Ok(new { token = await GenerateJwtToken(model.Email, appUser) });
             }
             return BadRequest("Something wrong with password or email");
         }
