@@ -35,8 +35,7 @@ namespace BlackJack.WEB.Controllers
             _signInManager = signInManager;
             _configuration = configuration;
         }
-
-        [AllowAnonymous]
+        
         [HttpGet("test")]
         public IActionResult Test()
         {
@@ -47,18 +46,6 @@ namespace BlackJack.WEB.Controllers
             };
             return Ok(user);
         }
-
-        [AllowAnonymous]
-        [HttpPost("testPOST")]
-        public IActionResult testPOST([FromBody] user user)
-        {
-            if (!string.IsNullOrEmpty(user.Name) && user.Age != 0)
-            {
-                return Ok(user);
-            }
-            return BadRequest(user);
-        }
-        
 
         public class user
         {
@@ -75,7 +62,12 @@ namespace BlackJack.WEB.Controllers
             if (result.Succeeded)
             {
                 var appUser = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
-                return Ok(new { token = await GenerateJwtToken(model.Email, appUser) });
+                return Ok(new
+                {
+                    UserId = appUser.Id.ToString(),
+                    Email = appUser.Email.ToString(),
+                    token = await GenerateJwtToken(model.Email, appUser)
+                });
             }
             return BadRequest("Something wrong with password or email");
         }
@@ -94,7 +86,13 @@ namespace BlackJack.WEB.Controllers
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, false);
-                return Ok(await GenerateJwtToken(model.Email, user));
+                var appUser = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
+                return Ok(new
+                {
+                    UserId = appUser.Id.ToString(),
+                    Email = appUser.Email.ToString(),
+                    token = await GenerateJwtToken(model.Email, user)
+                });
             }
             return BadRequest("Something wrong with password or email");
         }
