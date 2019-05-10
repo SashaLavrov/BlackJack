@@ -1,0 +1,19 @@
+<p class="alert alert-primary">
+  Game history
+</p>
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Date</th>
+        <th scope="col">More</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of myData">
+        <th scope="row">{{item.gameId}}</th>
+        <td>{{item.gameDate | date:'yyyy-MM-dd hh:mm:ss'}}</td>
+        <td><a class="btn btn-outline-info"  routerLink="/gamehistory/details/{{item.gameId}}">Details</a></td>
+      </tr>
+    </tbody>
+  </table>

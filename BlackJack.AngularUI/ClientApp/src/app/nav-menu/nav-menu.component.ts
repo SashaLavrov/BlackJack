@@ -12,9 +12,7 @@ export class NavMenuComponent {
   //currentUser = this.authenticationService.currentUserValue;
   check : boolean = false;
 
- constructor(private authenticationService: AuthenticationService){
-
-  }
+ constructor(private authenticationService: AuthenticationService){ }
 
   isLogin() : boolean {
     if(this.authenticationService.currentUserValue){

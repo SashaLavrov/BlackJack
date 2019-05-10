@@ -1,0 +1,30 @@
+<p class="alert alert-success">
+  Game# {{id}}
+</p>
+<table class="table table-striped">
+  <tbody *ngFor="let item of model; let i = index">
+    <tr>
+      <th class="align-middle">{{i +1}}</th>
+      <th *ngFor="let l of item; let t = index;">
+        <div data-toggle="collapse" [attr.data-target]="'#x' +t +l.roundNumber" style="cursor: pointer">
+            <div>{{l.playerName}}</div>
+            <div>{{l.totalCount}}</div>
+        </div>
+      </th>
+    </tr>
+    <!---->
+    <tr>
+        <th colspan="9">
+            <div width="100%">
+                <div *ngFor="let l of item; let t = index;" id="x{{t}}{{l.roundNumber}}" class="collapse">
+                    <img *ngFor="let k of l.cards" src="../../../assets/images/{{k.cardId}}.png" width="90px" style="margin: 5px; cursor: pointer">
+                    <router-outlet></router-outlet>
+                </div>
+              </div>
+        </th>
+    </tr>
+    <!---->
+    <!-- <app-cards *ngFor="let l of item;"></app-cards> -->
+  </tbody>
+</table>
+
