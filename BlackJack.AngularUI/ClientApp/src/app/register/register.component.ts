@@ -42,9 +42,10 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-
+ 
     // stop here if form is invalid
     if (this.registerForm.invalid) {
+      console.log(this.registerForm);
         return;
     }
 
@@ -52,7 +53,7 @@ export class RegisterComponent implements OnInit {
     this.authenticationService.register(this.f.email.value, this.f.password.value)
         .pipe(first())
         .subscribe(
-            data => {
+          data => {
                 this.router.navigate([this.returnUrl]);
             },
             error => {
@@ -75,7 +76,7 @@ export class RegisterComponent implements OnInit {
         if (control.value !== matchingControl.value) {
             matchingControl.setErrors({ mustMatch: true });
         } else {
-            matchingControl.setErrors({mustMatch: false});
+            matchingControl.setErrors(null);
         }
     }
 }
