@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
-import { GameService } from '../_services/game/game.service'
+import { GameService } from '../../game/services/game.service'
 
 @Component({
   selector: 'app-game-history',

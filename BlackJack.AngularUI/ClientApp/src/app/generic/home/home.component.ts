@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators} from '@angular/forms';
-import { GameService } from '../_services/game/game.service';
-import { CurrentPlayerStateView } from '../_models/current-player-state-view';
-import { HttpClient } from '@angular/common/http'
+import { GameService } from '../../game/services/game.service';
 import { first } from 'rxjs/operators';
 
 @Component({ templateUrl: 'home.component.html' })
@@ -17,7 +15,7 @@ export class HomeComponent {
   submitted = false;
   error = '';
 
-  constructor(private router:Router, private formBuilder: FormBuilder, private gameService: GameService, private http: HttpClient) { }
+  constructor(private router:Router, private formBuilder: FormBuilder, private gameService: GameService) { }
 
   get f() { return this.startGameForm.controls; }
 
@@ -25,7 +23,7 @@ export class HomeComponent {
 
   }
 
-  onSubmit() {
+  public onSubmit() {
     this.submitted = true;
 
     // stop here if form is invalid

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { GameService } from '../_services/game/game.service'
-import { CurrentPlayerStateView } from '../_models/current-player-state-view'
+import { GameService } from './services/game.service'
+import { CurrentPlayerStateView } from '../generic/models/current-player-state-view'
 
 @Component({
   selector: 'app-game',

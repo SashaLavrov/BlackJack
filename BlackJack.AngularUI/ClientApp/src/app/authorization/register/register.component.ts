@@ -40,7 +40,7 @@ export class RegisterComponent implements OnInit {
 
   get f() { return this.registerForm.controls; }
 
-  onSubmit() {
+  public onSubmit() {
     this.submitted = true;
  
     // stop here if form is invalid
@@ -62,7 +62,7 @@ export class RegisterComponent implements OnInit {
             });
   }
 
-  MustMatch(controlName: string, matchingControlName: string) {
+  private MustMatch(controlName: string, matchingControlName: string) {
     return (formGroup: FormGroup) => {
         const control = formGroup.controls[controlName];
         const matchingControl = formGroup.controls[matchingControlName];

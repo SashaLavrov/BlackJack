@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { ActivatedRoute } from '@angular/router';
-import { GameService } from '../_services/game/game.service';
+import { GameService } from '../../game/services/game.service';
 
 @Component({
   selector: 'app-game-history-details',

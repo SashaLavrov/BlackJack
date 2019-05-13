@@ -20,17 +20,18 @@
           </li>
           <li class="nav-item" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'
             *ngIf="isLogin()">
-            <a class="nav-link text-dark" routerLink='/login' (click)="Logout()">Logout</a>
+            <a class="nav-link text-dark" routerLink='authorization' (click)="Logout()">Logout</a>
           </li>
           <!---->
           <li class="nav-item" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'
             *ngIf="!isLogin()">
-            <a class="nav-link text-dark" routerLink='/login'>Login</a>
+            <a class="nav-link text-dark" routerLink='authorization'>Login</a>
           </li>
           <li class="nav-item" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'
             *ngIf="!isLogin()">
-            <a class="nav-link text-dark" routerLink='/register'>Register</a>
+            <a class="nav-link text-dark" routerLink='authorization/register'>Register</a>
           </li>
+          
         </ul>
       </div>
     </div>
