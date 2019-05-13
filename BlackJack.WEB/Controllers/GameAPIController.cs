@@ -49,5 +49,29 @@ namespace BlackJack.WEB.Controllers
                 return NotFound("Wrong game id");
             }
         }
+
+        [HttpGet("Hit")]
+        public IActionResult Hitme()
+        {
+            _gameService.Hit();
+            IEnumerable<CurrentPlayerStateView> state = _gameStateService.CurrentGameState();
+            return Ok(state);
+        }
+
+        [HttpGet("Enough")]
+        public IActionResult Enough()
+        {
+            _gameService.FinishRound();
+            IEnumerable<CurrentPlayerStateView> state = _gameStateService.CurrentGameState();
+            return Ok(state);
+        }
+
+        [HttpGet("FinishRound")]
+        public IActionResult FinishRound()
+        {
+            _gameService.StartNewRound();
+            IEnumerable<CurrentPlayerStateView> state = _gameStateService.CurrentGameState();
+            return Ok(state);
+        }
     }
 }

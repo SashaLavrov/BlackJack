@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
+import { GameService } from '../_services/game/game.service'
 
 @Component({
   selector: 'app-game-history',
@@ -7,12 +8,12 @@ import { HttpClient } from '@angular/common/http'
 })
 export class GameHistoryComponent implements OnInit {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private gameService: GameService) { }
 
   myData: gamesView[];
 
   ngOnInit() {
-    this.http.get("https://localhost:44378/api/GameAPI/getallgamestory").subscribe((data: gamesView[]) => {
+    this.gameService.GetAllGamestory().subscribe((data: gamesView[]) => {
       this.myData = data;
     });
   }

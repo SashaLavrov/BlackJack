@@ -19,6 +19,7 @@ namespace BlackJack.WEB.Controllers
     {
         private IStartGameService _startGameService;
         private IGameStateService _gameStateService;
+
         public HomeAPIController(IStartGameService startGameService, IGameStateService gameStateService)
         {
             _startGameService = startGameService;
@@ -31,17 +32,9 @@ namespace BlackJack.WEB.Controllers
             if (!string.IsNullOrEmpty(model.PlayerName) && model.PlayerName != "Dealer")
             {
                 _startGameService.StartNewGame(model.BotsCount, model.PlayerName);
-                IEnumerable<CurrentPlayerStateView> state = _gameStateService.CurrentGameState();
-                return Ok(state);
+                return Ok();
             }
             return BadRequest();
-        }
-
-        [HttpGet("test")]
-        public IActionResult Test()
-        {
-            IEnumerable<CurrentPlayerStateView> state = _gameStateService.CurrentGameState();
-            return Ok(state);
         }
     }
 }

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { CurrentPlayerStateView } from '../_models/current-player-state-view'
+import { GameService } from '../_services/game/game.service';
 
 @Component({
   selector: 'app-game-history-details',
@@ -12,14 +11,14 @@ export class GameHistoryDetailsComponent implements OnInit {
   private id: number;
   private routeSubscription: Subscription;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {
+  constructor(private route: ActivatedRoute, private gameService: GameService) {
     this.routeSubscription = route.params.subscribe(params=>this.id=params['id']);
    }
 
-   model;
+  model;
 
   ngOnInit() {
-    this.http.get("https://localhost:44378/api/GameAPI/gamedateils/" + this.id).subscribe((data) => {
+    this.gameService.GameDateils(this.id).subscribe((data) => {
       this.model = data;
     })
   }

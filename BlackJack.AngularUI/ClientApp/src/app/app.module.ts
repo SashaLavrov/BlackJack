@@ -7,18 +7,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './authorization/login/login.component';
 import { JwtInterceptor } from '../app/_helpers/jwt-interceptor';
 import { AuthGuard } from './_guards/auth.guard';
-import { RegisterComponent } from './register/register.component';
+import { RegisterComponent } from './authorization/register/register.component';
 import { ErrorInterceptor } from './_helpers/error-interceptor';
 import { GameHistoryComponent } from './game-history/game-history.component';
 import { GameHistoryDetailsComponent } from './game-history-details/game-history-details.component';
-import { CardsComponent } from './game-history-details/cards/cards.component';
-
-const itemRoutes: Routes = [
-  { path:"", component: CardsComponent},
-]
+import { GameComponent } from './game/game.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +25,7 @@ const itemRoutes: Routes = [
     RegisterComponent,
     GameHistoryComponent,
     GameHistoryDetailsComponent,
-    CardsComponent,
+    GameComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -38,12 +34,13 @@ const itemRoutes: Routes = [
     BrowserModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+      { path: '', component: HomeComponent },
       { path: 'gamehistory/details/:id',component: GameHistoryDetailsComponent, canActivate: [AuthGuard] },
-      { path: 'gamehistory/details/:id',component: GameHistoryDetailsComponent, children: itemRoutes, canActivate: [AuthGuard] },
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
-      { path: 'gamehistory', component: GameHistoryComponent, canActivate: [AuthGuard] },
+      //{ path: 'authorization', loadChildren: './authorization/authorization.module#AuthorizationModule'},
+      { path: 'gamehistory', component: GameHistoryComponent },
+      { path: 'game', component: GameComponent },
       { path: '**', redirectTo: '' }
     ])
   ],

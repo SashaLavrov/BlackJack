@@ -35,23 +35,6 @@ namespace BlackJack.WEB.Controllers
             _signInManager = signInManager;
             _configuration = configuration;
         }
-        
-        [HttpGet("test")]
-        public IActionResult Test()
-        {
-            user user = new user
-            {
-                Name = "Vitamin4ik",
-                Age = 22
-            };
-            return Ok(user);
-        }
-
-        public class user
-        {
-            public string Name { get; set; }
-            public int Age { get; set; }
-        }
 
         [AllowAnonymous]
         [HttpPost("Login")]
@@ -66,7 +49,7 @@ namespace BlackJack.WEB.Controllers
                 {
                     UserId = appUser.Id.ToString(),
                     Email = appUser.Email.ToString(),
-                    token = await GenerateJwtToken(model.Email, appUser)
+                    token = GenerateJwtToken(model.Email, appUser)
                 });
             }
             return BadRequest("Something wrong with password or email");
@@ -91,13 +74,13 @@ namespace BlackJack.WEB.Controllers
                 {
                     UserId = appUser.Id.ToString(),
                     Email = appUser.Email.ToString(),
-                    token = await GenerateJwtToken(model.Email, user)
+                    token = GenerateJwtToken(model.Email, user)
                 });
             }
             return BadRequest("Something wrong with password or email");
         }
 
-        private async Task<object> GenerateJwtToken(string email, User user)
+        private object GenerateJwtToken(string email, User user)
         {
             var claims = new List<Claim>
             {

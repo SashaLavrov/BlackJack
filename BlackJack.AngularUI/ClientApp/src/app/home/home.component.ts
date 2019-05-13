@@ -15,7 +15,6 @@ export class HomeComponent {
 
   loading = false;
   submitted = false;
-  returnUrl: string;
   error = '';
 
   constructor(private router:Router, private formBuilder: FormBuilder, private gameService: GameService, private http: HttpClient) { }
@@ -39,8 +38,7 @@ export class HomeComponent {
         .pipe(first())
         .subscribe(
             data => {
-              console.log(data);
-              //this.router.navigate(["/home"]);
+              this.router.navigate(["/game"]);
             },
             error => {
                 this.error = error;
