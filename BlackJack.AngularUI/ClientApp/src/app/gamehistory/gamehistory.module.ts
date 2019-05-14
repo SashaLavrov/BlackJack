@@ -4,7 +4,7 @@ import { GameHistoryComponent } from '../gamehistory/game-history/game-history.c
 import { GameHistoryDetailsComponent } from '../gamehistory/game-history-details/game-history-details.component';
 import { Routes, RouterModule } from '@angular/router';
 
-const routes : Routes =[
+const routes: Routes = [
   { path: '', component: GameHistoryComponent },
   { path: 'details/:id', component: GameHistoryDetailsComponent }
 ];

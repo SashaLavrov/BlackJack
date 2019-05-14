@@ -8,11 +8,8 @@ namespace BlackJack.DAL.Entities
     public class User
     {
         public int UserId { get; set; }
-
         public string Nickname { get; set; }
-
         public bool IsBot { get; set; }
-
         public IEnumerable<Combination> Combinations { get; set; }
     }
 }

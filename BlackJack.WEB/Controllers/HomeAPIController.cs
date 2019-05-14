@@ -17,13 +17,11 @@ namespace BlackJack.WEB.Controllers
     [Route("api/[controller]")]
     public class HomeAPIController : Controller
     {
-        private IStartGameService _startGameService;
-        private IGameStateService _gameStateService;
+        private readonly IStartGameService _startGameService;
 
         public HomeAPIController(IStartGameService startGameService, IGameStateService gameStateService)
         {
             _startGameService = startGameService;
-            _gameStateService = gameStateService;
         }
 
         [HttpPost("startgame")]

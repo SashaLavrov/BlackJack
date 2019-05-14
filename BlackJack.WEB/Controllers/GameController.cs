@@ -12,8 +12,8 @@ namespace BlackJack.WEB.Controllers
     [Authorize]
     public class GameController : Controller
     {
-        private IGameService _gameService;
-        private IGameStateService _gameStateService;
+        private readonly IGameService _gameService;
+        private readonly IGameStateService _gameStateService;
         public GameController(IGameStateService gameStateService, IGameService gameService)
         {
             _gameService = gameService;

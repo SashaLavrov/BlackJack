@@ -12,7 +12,6 @@ namespace BlackJack.DAL.Entities
         public int RoundNumber { get; set; }
         public int GameId { get; set; }
         public Game Game { get; set; }
-
         public IEnumerable<Combination> Combinations { get; set; }
     }
 }

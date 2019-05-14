@@ -24,10 +24,10 @@ import { AuthGuard } from './generic/guards/auth.guard';
     BrowserModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, canActivate: [AuthGuard]},
+      { path: '', component: HomeComponent, canActivate: [AuthGuard] },
       { path: 'authorization', loadChildren: './authorization/authorization.module#AuthorizationModule' },
-      { path: 'gamehistory', loadChildren: './gamehistory/gamehistory.module#GamehistoryModule', canActivate: [AuthGuard]},
-      { path: 'game', loadChildren: './game/game.module#GameModule', canActivate: [AuthGuard]},
+      { path: 'gamehistory', loadChildren: './gamehistory/gamehistory.module#GamehistoryModule', canActivate: [AuthGuard] },
+      { path: 'game', loadChildren: './game/game.module#GameModule', canActivate: [AuthGuard] },
       { path: '**', redirectTo: '' }
     ])
   ],

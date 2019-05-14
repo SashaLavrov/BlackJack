@@ -9,10 +9,8 @@ namespace BlackJack.DAL.Entities
     {
         [Key]
         public int ComboCardId { get; set; }
-
         public int CombinationId { get; set; }
         public Combination Combination { get; set; }
-
         public int CardId { get; set; }
         public Card Card { get; set; }
     }

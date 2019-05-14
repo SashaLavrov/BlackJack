@@ -12,8 +12,8 @@ export class GameHistoryDetailsComponent implements OnInit {
   private routeSubscription: Subscription;
 
   constructor(private route: ActivatedRoute, private gameService: GameService) {
-    this.routeSubscription = route.params.subscribe(params=>this.id=params['id']);
-   }
+    this.routeSubscription = route.params.subscribe(params => this.id = params['id']);
+  }
 
   model;
 

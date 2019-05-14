@@ -10,8 +10,8 @@ namespace BlackJack.WEB.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        private IStartGameService _startGameService;
-        public HomeController( IStartGameService startGameService)
+        private readonly IStartGameService _startGameService;
+        public HomeController(IStartGameService startGameService)
         {
             _startGameService = startGameService;
         }

@@ -15,8 +15,8 @@ namespace BlackJack.WEB.Controllers
     [ApiController]
     public class GameAPIController : ControllerBase
     {
-        private IGameService _gameService;
-        private IGameStateService _gameStateService;
+        private readonly IGameService _gameService;
+        private readonly IGameStateService _gameStateService;
         public GameAPIController(IGameService gameService, IGameStateService gameStateService)
         {
             _gameService = gameService;
@@ -44,7 +44,7 @@ namespace BlackJack.WEB.Controllers
                 var res = _gameStateService.GameState(id);
                 return Ok(res);
             }
-            catch(NullReferenceException)
+            catch (NullReferenceException)
             {
                 return NotFound("Wrong game id");
             }

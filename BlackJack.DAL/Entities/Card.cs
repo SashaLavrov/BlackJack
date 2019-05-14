@@ -15,10 +15,8 @@ namespace BlackJack.DAL.Entities
             Suit = suit;
         }
 
-        public Card()
-        {
+        public Card() { }
 
-        }
         [Key]
         public int CardId { get; set; }
 

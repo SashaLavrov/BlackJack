@@ -11,9 +11,9 @@ export class GameComponent implements OnInit {
 
   constructor(private gameService: GameService) { }
 
-  model : CurrentPlayerStateView[];
+  model: CurrentPlayerStateView[];
   isShowDealerCards = false;
-  isCanHit : boolean = true;
+  isCanHit: boolean = true;
 
   ngOnInit() {
     this.gameService.CurrentGame().subscribe((data: CurrentPlayerStateView[]) => {
@@ -21,23 +21,23 @@ export class GameComponent implements OnInit {
     });
   }
 
-  Hit(){
-    if(this.isCanHit){
+  Hit() {
+    if (this.isCanHit) {
       this.gameService.Hit().subscribe((data: CurrentPlayerStateView[]) => {
         this.model = data;
       });
     }
   }
 
-  Enough(){
+  Enough() {
     this.gameService.Enough().subscribe((data: CurrentPlayerStateView[]) => {
-       this.model = data;
+      this.model = data;
     });
 
     this.isCanHit = false;
   }
 
-  FinishRound(){
+  FinishRound() {
     this.gameService.FinishRound().subscribe((data: CurrentPlayerStateView[]) => {
       this.model = data;
     });

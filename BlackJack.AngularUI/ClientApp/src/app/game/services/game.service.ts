@@ -16,27 +16,27 @@ export class GameService {
     return this.http.post<any>("https://localhost:44378/api/HomeAPI/startgame", { BotsCount, PlayerName });
   }
 
-  public CurrentGame(){
+  public CurrentGame() {
     return this.http.get("https://localhost:44378/api/GameAPI/index");
   }
 
-  public Hit(){
+  public Hit() {
     return this.http.get("https://localhost:44378/api/GameAPI/Hit");
   }
 
-  public Enough(){
+  public Enough() {
     return this.http.get("https://localhost:44378/api/GameAPI/Enough");
   }
 
-  public FinishRound(){
+  public FinishRound() {
     return this.http.get("https://localhost:44378/api/GameAPI/FinishRound");
   }
 
-  public GameDateils(id: number){
+  public GameDateils(id: number) {
     return this.http.get("https://localhost:44378/api/GameAPI/gamedateils/" + id);
   }
 
-  public GetAllGamestory(){
+  public GetAllGamestory() {
     return this.http.get("https://localhost:44378/api/GameAPI/getallgamestory");
   }
 }

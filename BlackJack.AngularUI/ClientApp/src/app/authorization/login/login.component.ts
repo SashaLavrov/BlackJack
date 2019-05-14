@@ -7,11 +7,11 @@ import { AuthenticationService } from '../authservices/authentication.service';
 
 @Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {
-    loginForm: FormGroup= this.formBuilder.group({
+    loginForm: FormGroup = this.formBuilder.group({
         email: ['', [Validators.required, Validators.email]],
         password: ['', Validators.required],
     });
-    
+
     loading = false;
     submitted = false;
     returnUrl: string;

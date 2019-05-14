@@ -8,21 +8,21 @@ import { AuthenticationService } from '../../authorization/authservices/authenti
 })
 export class NavMenuComponent {
   isExpanded = false;
-  check : boolean = false;
+  check: boolean = false;
 
- constructor(private authenticationService: AuthenticationService){ }
+  constructor(private authenticationService: AuthenticationService) { }
 
-  public isLogin() : boolean {
-    if(this.authenticationService.currentUserValue){
+  public isLogin(): boolean {
+    if (this.authenticationService.currentUserValue) {
       return true;
     }
     return false;
   }
 
-  public Logout(){
+  public Logout() {
     this.authenticationService.logout();
   }
-        
+
 
   public collapse() {
     this.isExpanded = false;

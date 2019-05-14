@@ -35,7 +35,7 @@ namespace BlackJack.DAL.Repositories
             {
                 _db.Entry(oldComboCard).CurrentValues.SetValues(item);
                 _db.SaveChanges();
-            }     
+            }
         }
     }
 }
