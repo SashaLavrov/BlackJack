@@ -1,3 +1,10 @@
 a{
     margin-left: 5px;
 }
+.lose{
+    background-color: lightcoral;
+}
+
+.win{
+    background-color: lightgreen;
+}

@@ -4,7 +4,9 @@ export class CurrentPlayerStateView {
     playerName: string;
     isBot: boolean;
     totalCount: number;
-    Cards: [CurrentCardPlayerStateViewItem];
+    cards: Array<CurrentCardPlayerStateViewItem>[];
+
+    isWin: boolean;
 }
 
 export class CurrentCardPlayerStateViewItem {

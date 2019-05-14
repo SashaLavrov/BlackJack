@@ -19,9 +19,7 @@ export class HomeComponent {
 
   get f() { return this.startGameForm.controls; }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() { }
 
   public onSubmit() {
     this.submitted = true;
@@ -42,5 +40,8 @@ export class HomeComponent {
                 this.error = error;
                 this.loading = false;
             });
+            localStorage.setItem('Player', this.f.playerName.value);
   }
+
+
 }

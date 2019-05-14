@@ -1,8 +1,10 @@
+
 <table class="table table-striped">
   <thead>
     <tr>
       <th>Player</th>
       <th>Total</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -15,6 +17,7 @@
       </th>
       <th>
         <img *ngFor='let l of item.cards' src="../../assets/images/{{l.cardId}}.png" width="70px" style="margin: 10px">
+        <p>{{item.isWin}}</p>
       </th>
     </tr>
   </tbody>
@@ -24,6 +27,26 @@
   <div class="col-md-4 offset-4">
     <a class="btn btn-danger" (click)='Hit()'>Hit</a>
     <a class="btn btn-success" (click)='Enough()'>Enough</a>
-    <a class="btn btn-primary" (click)='FinishRound()'>FinishRound</a>
+    <a class="btn btn-primary" (click)='FinishRound()'>Next round</a>
+  </div>
+</div>
+
+<button id="openModalButton" [hidden]="true" class="btn btn-primary" data-toggle="modal" data-target=".myModal"></button>
+
+<div class="modal fade myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header alert alert-warning">
+            <p>Oops... O_o</p><h3>{{player.totalCount}}</h3>
+        </div>
+        <div class="modal-body">
+          <img *ngFor='let item of player.cards' src="../../assets/images/{{item.cardId}}.png" width="70px" style="margin: 10px">
+          <p>sorry but your final count more than 21... :((((</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Watch result</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)='FinishRound()'>Next round</button>
+        </div>
+    </div>
   </div>
 </div>
