@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GameService } from './services/game.service';
 import { CurrentPlayerStateView } from '../generic/models/current-player-state-view';
-import { ROUTER_CONFIGURATION } from '@angular/router';
 
 @Component({
   selector: 'app-game',
@@ -11,11 +10,14 @@ import { ROUTER_CONFIGURATION } from '@angular/router';
 export class GameComponent implements OnInit {
 
   constructor(private gameService: GameService) { }
-
+ 
+  private maxScore: number = 21;
   public model: CurrentPlayerStateView[];
   private isCanHit: boolean = true;
   private playerName: string = localStorage.getItem("Player");
   public player: CurrentPlayerStateView = new CurrentPlayerStateView();
+  public dealer: CurrentPlayerStateView = new CurrentPlayerStateView();
+  public isPlayerWin: boolean = false;
 
   ngOnInit() {
     this.gameService.CurrentGame().subscribe((data: CurrentPlayerStateView[]) => {
@@ -28,9 +30,9 @@ export class GameComponent implements OnInit {
       this.gameService.Hit().subscribe((data: CurrentPlayerStateView[]) => {
         this.model = data;
         this.player = data.find(x => x.playerName == this.playerName);
-        if (this.player.totalCount > 21) {
+        this.dealer = data.find(x => x.playerName == "Dealer");
+        if (this.player.totalCount > this.maxScore) {
           this.Enough();
-          document.getElementById("openModalButton").click();
         }
       });
     }
@@ -39,15 +41,20 @@ export class GameComponent implements OnInit {
   public Enough() {
     this.gameService.Enough().subscribe((data: CurrentPlayerStateView[]) => {
       this.model = data;
-      //let dealerCount = data.find(x => x.playerName == "Dealer").totalCount;
-      // for (let i of this.model) {
-      //   if (i.playerName != "Dealer" && (i.totalCount < 22 && i.totalCount > dealerCount || dealerCount > 21)) {
-      //     console.log(i.totalCount);
-      //     i.isWin = true;
-      //   } else {
-      //     i.isWin = false;
-      //   }
-      // }
+      this.player = data.find(x => x.playerName == this.playerName);
+      this.dealer = data.find(x => x.playerName == "Dealer");
+
+      console.log(this.dealer.totalCount);
+      if(this.player.totalCount > this.maxScore){
+        document.getElementById("overScoreButton").click();
+      }
+      else if(this.dealer.totalCount < this.player.totalCount || this.dealer.totalCount > 21){
+        this.isPlayerWin = true;
+        document.getElementById("enoughButton").click();
+      }else{
+        document.getElementById("enoughButton").click();
+        this.isPlayerWin = false;
+      }
     });
     this.isCanHit = false;
   }

@@ -1,4 +1,3 @@
-
 <table class="table table-striped">
   <thead>
     <tr>
@@ -17,7 +16,6 @@
       </th>
       <th>
         <img *ngFor='let l of item.cards' src="../../assets/images/{{l.cardId}}.png" width="70px" style="margin: 10px">
-        <p>{{item.isWin}}</p>
       </th>
     </tr>
   </tbody>
@@ -25,28 +23,73 @@
 
 <div class="container">
   <div class="col-md-4 offset-4">
-    <a class="btn btn-danger" (click)='Hit()'>Hit</a>
-    <a class="btn btn-success" (click)='Enough()'>Enough</a>
-    <a class="btn btn-primary" (click)='FinishRound()'>Next round</a>
+    <a class="btn btn-danger" (click)='Hit()' style="color:#ffffff">Hit</a>
+    <a class="btn btn-success" (click)='Enough()' style="color:#ffffff">Enough</a>
+    <a class="btn btn-primary" (click)='FinishRound()' style="color:#ffffff">Next round</a>
   </div>
 </div>
 
-<button id="openModalButton" [hidden]="true" class="btn btn-primary" data-toggle="modal" data-target=".myModal"></button>
+<button id="overScoreButton" [hidden]="true" class="btn btn-primary" data-toggle="modal"
+  data-target=".over-score"></button>
 
-<div class="modal fade myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade over-score" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
-        <div class="modal-header alert alert-warning">
-            <p>Oops... O_o</p><h3>{{player.totalCount}}</h3>
+      <div class="modal-header alert alert-warning">
+        <p>Oops... O_o</p>
+        <h3>{{player.totalCount}}</h3>
+      </div>
+      <div class="modal-body" >
+        <img *ngFor='let item of player.cards' src="../../assets/images/{{item.cardId}}.png" width="70px"
+          style="margin: 10px">
+        <p></p>
+      </div>
+      <div class="col-md-12 alert alert-warning"  style="text-align: center; margin-bottom: 0px;">
+          You lose because your final score is over 21... :((((
+    </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Watch result</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)='FinishRound()'>Next round</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button id="enoughButton" [hidden]="true" class="btn btn-primary" data-toggle="modal"
+  data-target=".enough">Test</button>
+
+<div class="modal fade enough" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header alert" [class.alert-success]="isPlayerWin" [class.alert-danger]="!isPlayerWin">
+        <p *ngIf="isPlayerWin">Hey you win ))))</p>
+        <p *ngIf="!isPlayerWin">Oops you lose ((((</p>
+      </div>
+      <div class="modal-body row" style="padding-bottom: 0px">
+        <div class="col-md-4">
+          <img *ngFor='let item of player.cards' src="../../assets/images/{{item.cardId}}.png" width="70px"
+            style="margin: 10px">
         </div>
-        <div class="modal-body">
-          <img *ngFor='let item of player.cards' src="../../assets/images/{{item.cardId}}.png" width="70px" style="margin: 10px">
-          <p>sorry but your final count more than 21... :((((</p>
+        <div class="col-md-4">
+          <img src="../../assets/images/Versus.png" style="margin: 0 auto; display: block; width: 200px">
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Watch result</button>
-            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)='FinishRound()'>Next round</button>
+        <div class="col-md-4">
+          <img *ngFor='let l of dealer.cards' src="../../assets/images/{{l.cardId}}.png" width="70px"
+            style="margin: 10px">
         </div>
+        <div *ngIf="!isPlayerWin" class="col-md-12" [class.alert-success]="isPlayerWin"
+          [class.alert-danger]="!isPlayerWin" style="text-align: center;">
+          You lose, you have {{player.totalCount}}, Dealer has {{dealer.totalCount}}.
+        </div>
+        <div *ngIf="isPlayerWin" class="col-md-12" [class.alert-success]="isPlayerWin"
+          [class.alert-danger]="!isPlayerWin" style="text-align: center;">
+          You win! you have {{player.totalCount}}, Dealer has {{dealer.totalCount}}.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Watch result</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)='FinishRound()'>Next round</button>
+      </div>
     </div>
   </div>
 </div>
