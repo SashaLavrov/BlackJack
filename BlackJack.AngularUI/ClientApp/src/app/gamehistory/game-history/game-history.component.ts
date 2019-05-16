@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
-import { GameService } from '../../shared/serveces/gameservices/game.service'
+import { GameService } from '../../shared/services/gameservices/game.service'
 
 @Component({
   selector: 'app-game-history',

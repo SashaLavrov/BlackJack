@@ -69,7 +69,7 @@ namespace BlackJack.AngularUI.Controllers
             {
                 await _signInManager.SignInAsync(user, false);
                 var appUser = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
-                return Ok(new LoginSuccessViewModel
+                return Ok(new LoginSuccessViewModel()
                 {
                     UserId = appUser.Id.ToString(),
                     Email = appUser.Email.ToString(),

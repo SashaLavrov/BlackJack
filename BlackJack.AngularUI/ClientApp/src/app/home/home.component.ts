@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators} from '@angular/forms';
-import { GameService } from '../shared/serveces/gameservices/game.service';
+import { GameService } from '../shared/services/gameservices/game.service';
 import { first } from 'rxjs/operators';
 
 @Component({ templateUrl: 'home.component.html' })
