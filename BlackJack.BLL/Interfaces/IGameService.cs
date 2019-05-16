@@ -1,8 +1,6 @@
 ﻿using BlackJack.BLL.Models;
 using BlackJack.DAL.Entities;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace BlackJack.BLL.Interfaces
 {
@@ -16,5 +14,6 @@ namespace BlackJack.BLL.Interfaces
         void StartNewRound();
         IEnumerable<GameView> GetAllGames();
         Card GetRandomCard();
+        int SumOfCards(IEnumerable<Card> cards);
     }
 }

@@ -15,6 +15,7 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\BlackJack.Authorization\BlackJack.Authorization.csproj" />
     <ProjectReference Include="..\BlackJack.BLL\BlackJack.BLL.csproj" />
   </ItemGroup>
 

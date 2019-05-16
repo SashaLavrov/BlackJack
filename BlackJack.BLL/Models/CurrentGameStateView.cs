@@ -12,31 +12,7 @@ namespace BlackJack.BLL.Models
         public string PlayerName { get; set; }
         public bool IsBot { get; set; }
         public IEnumerable<CurrentCardPlayerStateViewItem> Cards { get; set; }
-        public int TotalCount
-        {
-            get
-            {
-                int currentSum = Cards.Sum(x => x.Value);
-
-                if (Cards.Where(x => x.Type == "ace").Count() > 0 && currentSum > 21)
-                {
-                    currentSum = 0;
-                    foreach (var i in Cards)
-                    {
-                        if (i.Type == "ace")
-                        {
-                            currentSum++;
-                        }
-                        else
-                        {
-                            currentSum += i.Value;
-                        }
-                    }
-                    return currentSum;
-                }
-                return currentSum;
-            }
-        }
+        public int TotalCount { get; set; }
     }
 
     public class CurrentCardPlayerStateViewItem

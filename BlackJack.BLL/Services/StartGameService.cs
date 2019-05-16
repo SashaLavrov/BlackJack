@@ -5,7 +5,6 @@ using BlackJack.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace BlackJack.BLL.Services
 {
@@ -87,14 +86,7 @@ namespace BlackJack.BLL.Services
         {
             var player = _userRepository.GetAll().Where(x => x.Nickname == playerName && x.IsBot == false).FirstOrDefault();
 
-            if (player == null)
-            {
-                return _userRepository.Create(playerName);
-            }
-            else
-            {
-                return player.UserId;
-            }
+            return player == null ? _userRepository.Create(playerName) : player.UserId;
         }
 
         private int InitializationGame()

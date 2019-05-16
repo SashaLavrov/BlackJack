@@ -1,5 +1,3 @@
-using System;
-
 namespace BlackJack.WEB.Models
 {
     public class ErrorViewModel

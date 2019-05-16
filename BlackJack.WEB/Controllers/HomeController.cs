@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using BlackJack.WEB.Models;
 using Microsoft.AspNetCore.Authorization;
 using BlackJack.BLL.Interfaces;
-
+using BlackJack.WEB.Models;
+using BlackJack.WEB.ViewModels;
 
 namespace BlackJack.WEB.Controllers
 {

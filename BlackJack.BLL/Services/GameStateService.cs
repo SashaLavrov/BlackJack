@@ -5,7 +5,6 @@ using BlackJack.DAL.Entities;
 using BlackJack.DAL.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace BlackJack.BLL.Services
 {
@@ -44,6 +43,7 @@ namespace BlackJack.BLL.Services
             foreach (var i in players)
             {
                 var playerCards = GetPlayrsCard(i.UserId, lastRoundId);
+                int playerTotalCount = _gameService.SumOfCards(GetPlayrCards(i.UserId, lastRoundId));
 
                 CurrentPlayerStateView item = new CurrentPlayerStateView
                 {
@@ -51,6 +51,7 @@ namespace BlackJack.BLL.Services
                     PlayerId = i.UserId,
                     PlayerName = i.Nickname,
                     Cards = playerCards,
+                    TotalCount = playerTotalCount,
                 };
 
                 result.Add(item);
@@ -68,6 +69,11 @@ namespace BlackJack.BLL.Services
                 Cards.Add(_mapper.Map<CurrentCardPlayerStateViewItem>(i));
             }
             return Cards;
+        }
+
+        private IEnumerable<Card> GetPlayrCards(int playerId, int roundId)
+        {
+            return _gameService.GetPlayersCardInRound(playerId, roundId);
         }
 
         public IEnumerable<IEnumerable<CurrentPlayerStateView>> GameState(int gameId)
@@ -94,6 +100,7 @@ namespace BlackJack.BLL.Services
                         PlayerId = p.UserId,
                         PlayerName = p.Nickname,
                         Cards = playerCards,
+                        TotalCount = _gameService.SumOfCards(_gameService.GetPlayersCardInRound(p.UserId, r.RoundId))
                     };
                     result.Add(item);
                 }
@@ -103,3 +110,5 @@ namespace BlackJack.BLL.Services
         }
     }
 }
+    
+

@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using BlackJack.WEB.Models;
-using BlackJack.WEB.ViewModels;
+using BlackJack.Authorization.Models;
+using BlackJack.AngularUI.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
-namespace BlackJack.WEB.Controllers
+namespace BlackJack.AngularUI.Controllers
 {
     [Authorize]
     [ApiController]
@@ -38,18 +37,18 @@ namespace BlackJack.WEB.Controllers
 
         [AllowAnonymous]
         [HttpPost("Login")]
-        public async Task<object> Login([FromBody] LoginView model)
+        public async Task<object> Login([FromBody] AuthorizationViewModel model)
         {
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
 
             if (result.Succeeded)
             {
                 var appUser = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
-                return Ok(new
+                return Ok(new LoginSuccessViewModel()
                 {
                     UserId = appUser.Id.ToString(),
                     Email = appUser.Email.ToString(),
-                    token = GenerateJwtToken(model.Email, appUser)
+                    token = GenerateJwtToken(model.Email, appUser).ToString()
                 });
             }
             return BadRequest("Something wrong with password or email");
@@ -57,8 +56,8 @@ namespace BlackJack.WEB.Controllers
 
         [AllowAnonymous]
         [HttpPost("Register")]
-        public async Task<object> Register([FromBody] RegisterView model)
-        {
+        public async Task<object> Register([FromBody] login model)
+        { 
             var user = new User
             {
                 UserName = model.Email,
@@ -77,7 +76,13 @@ namespace BlackJack.WEB.Controllers
                     token = GenerateJwtToken(model.Email, user)
                 });
             }
-            return BadRequest("Something wrong with password or email");
+            return Ok("Something wrong with password or email");
+        }
+
+        public class login
+        {
+            public string Email { get; set; }
+            public string Password { get; set; }
         }
 
         private object GenerateJwtToken(string email, User user)

@@ -20,7 +20,7 @@ export class AuthenticationService {
   }
 
   login(email: string, password: string) {
-    return this.http.post<any>("https://localhost:44378/api/AccountAPI/Login", { email, password })
+    return this.http.post<any>("https://localhost:44356/api/AccountAPI/Login", { email, password })
       .pipe(map(user => {
         if (user && user.token) {
           localStorage.setItem('currentUser', JSON.stringify(user));
@@ -31,7 +31,7 @@ export class AuthenticationService {
   }
 
   register(email: string, password: string) {
-    return this.http.post<any>("https://localhost:44378/api/AccountAPI/Register", { email, password })
+    return this.http.post<any>("https://localhost:44356/api/AccountAPI/Register", { email, password})
       .pipe(map(user => {
         if (user && user.token) {
           localStorage.setItem('currentUser', JSON.stringify(user));

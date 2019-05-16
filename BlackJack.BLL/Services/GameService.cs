@@ -6,7 +6,6 @@ using BlackJack.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace BlackJack.BLL.Services
 {
@@ -133,7 +132,7 @@ namespace BlackJack.BLL.Services
             GiveCardToBots();
         }
 
-        private int SumOfCards(IEnumerable<Card> cards)
+        public int SumOfCards(IEnumerable<Card> cards)
         {
             int currentSum = cards.Sum(x => x.Value);
 
@@ -210,14 +209,7 @@ namespace BlackJack.BLL.Services
         {
             var cards = GetPlayersCardInRound(playerId, roundId);
             int currenSum = SumOfCards(cards);
-            if (currenSum < ConstantsValue.MaxTotalSum)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return currenSum < ConstantsValue.MaxTotalSum;
         }
 
         private Game LastGame()
