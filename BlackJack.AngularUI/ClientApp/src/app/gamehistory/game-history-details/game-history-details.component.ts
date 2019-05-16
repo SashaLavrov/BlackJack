@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { ActivatedRoute } from '@angular/router';
-import { GameService } from '../../game/services/game.service';
+import { GameService } from '../../shared/serveces/gameservices/game.service';
 
 @Component({
   selector: 'app-game-history-details',
@@ -18,7 +18,7 @@ export class GameHistoryDetailsComponent implements OnInit {
   model;
 
   ngOnInit() {
-    this.gameService.GameDateils(this.id).subscribe((data) => {
+    this.gameService.gameDateils(this.id).subscribe((data) => {
       this.model = data;
     })
   }

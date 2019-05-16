@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, Validators, FormControl, FormBuilder } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
-import { AuthenticationService } from '../authservices/authentication.service';
+import { AuthenticationService } from '../../shared/serveces/authservices/authentication.service';
 
 @Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     }
 
-    get f() { return this.loginForm.controls; }
+    get dataControls() { return this.loginForm.controls; }
 
     public onSubmit() {
         this.submitted = true;
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
         }
 
         this.loading = true;
-        this.authenticationService.login(this.f.email.value, this.f.password.value)
+        this.authenticationService.login(this.dataControls.email.value, this.dataControls.password.value)
             .pipe(first())
             .subscribe(
                 data => {

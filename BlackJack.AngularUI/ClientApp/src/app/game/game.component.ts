@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { GameService } from './services/game.service';
-import { CurrentPlayerStateView } from '../generic/models/current-player-state-view';
+import { GameService } from '../shared/serveces/gameservices/game.service';
+import { CurrentPlayerStateView } from '../shared/models/current-player-state-view';
 
 @Component({
   selector: 'app-game',
@@ -20,7 +20,7 @@ export class GameComponent implements OnInit {
   public isPlayerWin: boolean = false;
 
   ngOnInit() {
-    this.gameService.CurrentGame().subscribe((data: CurrentPlayerStateView[]) => {
+    this.gameService.currentGame().subscribe((data: CurrentPlayerStateView[]) => {
       this.model = data;
     });
   }
@@ -39,7 +39,7 @@ export class GameComponent implements OnInit {
   }
 
   public Enough() {
-    this.gameService.Enough().subscribe((data: CurrentPlayerStateView[]) => {
+    this.gameService.enough().subscribe((data: CurrentPlayerStateView[]) => {
       this.model = data;
       this.player = data.find(x => x.playerName == this.playerName);
       this.dealer = data.find(x => x.playerName == "Dealer");
@@ -60,7 +60,7 @@ export class GameComponent implements OnInit {
   }
 
   public FinishRound() {
-    this.gameService.FinishRound().subscribe((data: CurrentPlayerStateView[]) => {
+    this.gameService.finishRound().subscribe((data: CurrentPlayerStateView[]) => {
       this.model = data;
     });
     this.isCanHit = true;

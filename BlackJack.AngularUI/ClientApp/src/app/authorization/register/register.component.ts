@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
-import { AuthenticationService } from '../authservices/authentication.service';
+import { AuthenticationService } from '../../shared/serveces/authservices/authentication.service';
 
 @Component({
   selector: 'app-register',
@@ -37,7 +37,7 @@ export class RegisterComponent implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  get f() { return this.registerForm.controls; }
+  get dataControls() { return this.registerForm.controls; }
 
   public onSubmit() {
     this.submitted = true;
@@ -49,7 +49,7 @@ export class RegisterComponent implements OnInit {
     }
 
     this.loading = true;
-    this.authenticationService.register(this.f.email.value, this.f.password.value)
+    this.authenticationService.register(this.dataControls.email.value, this.dataControls.password.value)
       .pipe(first())
       .subscribe(
         data => {

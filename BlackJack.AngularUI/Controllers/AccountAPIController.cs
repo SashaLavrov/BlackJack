@@ -56,7 +56,7 @@ namespace BlackJack.AngularUI.Controllers
 
         [AllowAnonymous]
         [HttpPost("Register")]
-        public async Task<object> Register([FromBody] login model)
+        public async Task<object> Register([FromBody] AuthorizationViewModel model)
         { 
             var user = new User
             {
@@ -69,20 +69,14 @@ namespace BlackJack.AngularUI.Controllers
             {
                 await _signInManager.SignInAsync(user, false);
                 var appUser = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
-                return Ok(new
+                return Ok(new LoginSuccessViewModel
                 {
                     UserId = appUser.Id.ToString(),
                     Email = appUser.Email.ToString(),
-                    token = GenerateJwtToken(model.Email, user)
+                    token = GenerateJwtToken(model.Email, user).ToString()
                 });
             }
             return Ok("Something wrong with password or email");
-        }
-
-        public class login
-        {
-            public string Email { get; set; }
-            public string Password { get; set; }
         }
 
         private object GenerateJwtToken(string email, User user)

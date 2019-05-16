@@ -50,8 +50,10 @@ namespace BlackJack.BLL.Services
         public IEnumerable<User> GetAllPlayerFromGame(int gameId)
         {
             var rounds = _roundRepository.GetAll().Where(x => x.GameId == gameId);
-            int lastRoundId = rounds.Where(x => x.RoundNumber == rounds.Max(y => y.RoundNumber)).FirstOrDefault().RoundId;
-            var combinations = _combinationRepository.GetAll().Where(x => x.RoundId == lastRoundId);
+            int lastRoundId = rounds.Where(x => x.RoundNumber == rounds.Max(y => y.RoundNumber))
+                .FirstOrDefault().RoundId;
+            var combinations = _combinationRepository.GetAll()
+                .Where(x => x.RoundId == lastRoundId);
 
             List<User> players = new List<User>();
 
@@ -89,15 +91,19 @@ namespace BlackJack.BLL.Services
 
         public Round GetLastRoundFromGame(int gameId)
         {
-            var rounds = _roundRepository.GetAll().Where(x => x.GameId == gameId);
-            var lastRound = rounds.Where(x => x.RoundNumber == rounds.Max(y => y.RoundNumber)).FirstOrDefault();
+            var rounds = _roundRepository.GetAll()
+                .Where(x => x.GameId == gameId);
+
+            var lastRound = rounds.Where(x => x.RoundNumber == rounds.Max(y => y.RoundNumber))
+                .FirstOrDefault();
 
             return lastRound;
         }
 
         public IEnumerable<Card> GetPlayersCardInRound(int playerId, int roundId)
         {
-            int combinationId = _combinationRepository.GetAll().Where(x => x.RoundId == roundId && x.UserId == playerId).FirstOrDefault().CombinationId;
+            int combinationId = _combinationRepository.GetAll().Where(x => x.RoundId == roundId && x.UserId == playerId)
+                .FirstOrDefault().CombinationId;
             var tempRes = _comboCardRepository.GetAll();
             var comboCard = tempRes.Where(x => x.CombinationId == combinationId).ToList();
 
@@ -136,21 +142,22 @@ namespace BlackJack.BLL.Services
         {
             int currentSum = cards.Sum(x => x.Value);
 
-            if (cards.Where(x => x.Type == "ace").Count() > 0 && currentSum > 21)
+            if (cards.Where(x => x.Type == "ace").Count() < 0 && currentSum < 21)
             {
-                currentSum = 0;
-                foreach (var i in cards)
-                {
-                    if (i.Type == "ace")
-                    {
-                        currentSum++;
-                    }
-                    else
-                    {
-                        currentSum += i.Value;
-                    }
-                }
                 return currentSum;
+            }
+
+            currentSum = 0;
+            foreach (var i in cards)
+            {
+                if (i.Type == "ace")
+                {
+                    currentSum++;
+                }
+                else
+                {
+                    currentSum += i.Value;
+                }
             }
             return currentSum;
         }

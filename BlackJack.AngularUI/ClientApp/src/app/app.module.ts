@@ -5,11 +5,11 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { NavMenuComponent } from './generic/nav-menu/nav-menu.component';
-import { HomeComponent } from './generic/home/home.component';
-import { JwtInterceptor } from "../app/generic/helpers/jwt-interceptor";
-import { ErrorInterceptor } from '../app/generic/helpers/error-interceptor';
-import { AuthGuard } from './generic/guards/auth.guard';
+import { NavMenuComponent } from './nav-menu/nav-menu.component';
+import { HomeComponent } from './home/home.component';
+import { JwtInterceptor } from "./shared/helpers/jwt-interceptor";
+import { ErrorInterceptor } from './shared/helpers/error-interceptor';
+import { AuthGuard } from './shared/guards/auth.guard';
 
 @NgModule({
   declarations: [

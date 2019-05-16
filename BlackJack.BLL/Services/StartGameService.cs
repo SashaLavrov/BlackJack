@@ -72,7 +72,9 @@ namespace BlackJack.BLL.Services
                 botsCount = ConstantsValue.MinBotCount;
             }
 
-            List<User> bots = _userRepository.GetAll().Where(x => x.IsBot).ToList();
+            List<User> bots = _userRepository.GetAll()
+                .Where(x => x.IsBot)
+                .ToList();
 
             for (int i = 0; i < botsCount; i++)
             {
@@ -84,8 +86,9 @@ namespace BlackJack.BLL.Services
 
         private int InitializationPlayer(string playerName)
         {
-            var player = _userRepository.GetAll().Where(x => x.Nickname == playerName && x.IsBot == false).FirstOrDefault();
-
+            var player = _userRepository.GetAll()
+                .Where(x => x.Nickname == playerName && x.IsBot == false)
+                .FirstOrDefault();
             return player == null ? _userRepository.Create(playerName) : player.UserId;
         }
 
